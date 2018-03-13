@@ -1,0 +1,62 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" 
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:h="http://java.sun.com/jsf/html"
+       xmlns:f="http://xmlns.jcp.org/jsf/core"
+    xmlns:p="http://primefaces.org/ui"
+        >
+     <f:metadata>  
+         <f:viewParam name="idClient" value="#{clientDetailsMBean.idClient}" required="true"/>  
+         <f:viewAction action="#{clientDetailsMBean.loadClient()}"/>  
+</f:metadata>
+    <h:head>
+        <title>Details</title>
+    </h:head>
+   
+    
+      <h:body>
+        <ui:composition template="./template.xhtml">
+ 
+            <ui:define name="content">
+                 <f:view>
+
+
+            <h:form>
+                <h1><h:outputText value="Details Du client"/></h1>
+                <p:panelGrid columns="2">
+                    <p:outputLabel value="Nom:" for="nom" />
+                    <p:inputText id="nom" value="#{clientDetailsMBean.details.nom}" title="Nom" />
+                    <p:outputLabel value="Prenom:" for="prenom" />
+                    <p:inputText id="prenom" value="#{clientDetailsMBean.details.prenom}" title="Prenom" />
+                    <p:outputLabel value="Ville:" for="ville" />
+                    <p:inputText id="ville" value="#{clientDetailsMBean.details.addresse.ville}" title="Ville" />
+                    <p:outputLabel value="Rue" for="rue" />
+                    <p:inputText id="rue" value="#{clientDetailsMBean.details.addresse.rue}" title="Rue" />
+                    <p:outputLabel value="No:" for="no" />
+                    <p:inputText id="no" value="#{clientDetailsMBean.details.addresse.numero}" title="No" />
+                    <p:outputLabel value="Phone:" for="phone" />
+                    <p:inputText id="phone" value="#{clientDetailsMBean.details.phone}" title="Phone" />
+                    <p:outputLabel value="Email:" for="email" />
+                    <p:inputText id="email" value="#{clientDetailsMBean.details.email}" title="Email" />
+                   
+                    
+<!--                    <h:outputLabel value="Liste Comptes Bancaires:" for="comptebancaire" />
+                    <h:selectOneMenu id="comptebancaire" title="Client" >
+                        <f:selectItems value="#{clientDetailsMBean.details.compteBancaires}"  
+                                                   var="item"   
+                                                   itemLabel="#{item.nom}" itemValue="#{item}" /> 
+                    </h:selectOneMenu>-->
+                   
+                </p:panelGrid>
+                 <p:commandButton id="update" value="Modifier" action="#{clientDetailsMBean.update}"/>
+                   
+                
+            </h:form>
+        </f:view>
+            </ui:define>
+ 
+        </ui:composition>
+    </h:body>
+</html>
+

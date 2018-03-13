@@ -1,0 +1,66 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" 
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:h="http://java.sun.com/jsf/html"
+       xmlns:f="http://xmlns.jcp.org/jsf/core"
+    xmlns:p="http://primefaces.org/ui"
+      >
+    <h:head>
+        <title>Liste des transactions</title>
+    </h:head>
+   
+   
+    
+    
+     <h:body>
+        <ui:composition template="./template.xhtml">
+ 
+            <ui:define name="content">
+                   <f:view>
+
+
+            <h:form>
+                <h1><h:outputText value="Liste des transactions"/></h1>
+                <p:dataTable value="#{transactionBancaireMBean.transactions}" var="item">
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="Montant"/>
+                        </f:facet>
+                        <h:outputText value="#{item.montant}"/>
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="Comptebancaire"/>
+                        </f:facet>
+                        <h:outputText value="#{item.comptebancaire.nom}"/>
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="Client"/>
+                        </f:facet>
+                        <h:outputText value="#{item.client.nom}"/>
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="DateTransaction"/>
+                        </f:facet>
+                        <h:outputText value="#{item.dateTransaction}">
+                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                        </h:outputText>
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="Id"/>
+                        </f:facet>
+                        <h:outputText value="#{item.id}"/>
+                    </p:column>
+                </p:dataTable>
+            </h:form>
+        </f:view>
+            </ui:define>
+ 
+        </ui:composition>
+    </h:body>
+</html>
+

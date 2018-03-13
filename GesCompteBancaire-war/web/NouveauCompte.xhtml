@@ -1,0 +1,47 @@
+<html xmlns="http://www.w3.org/1999/xhtml" 
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:h="http://java.sun.com/jsf/html"
+       xmlns:f="http://xmlns.jcp.org/jsf/core"
+    xmlns:p="http://primefaces.org/ui" >
+    
+    
+    <h:head>
+        <title>Nouveau Compte</title>
+    </h:head>
+   
+     
+    
+    <h:body>
+        <ui:composition template="./template.xhtml">
+ 
+            <ui:define name="content">
+                    <f:view>
+
+
+            <h:form>
+                <h1><h:outputText value="Create/Edit"/></h1>
+                <h:panelGrid columns="2">
+                  
+                   <h:outputLabel value="Client:" for="client" />
+                    
+                    <h:selectOneMenu id="client" value="#{compteBancairMBean.client}" title="Client"
+                                     converter="#{compteBancairMBean.clientConverter}" >
+                        <!-- TODO: update below reference to list of available items-->
+                        <f:selectItems value="#{clientMBean.clients}"
+                                       var="item" itemLabel="#{item.nom} #{item.prenom}" itemValue="#{item}" />
+                    </h:selectOneMenu>
+                    
+                    
+                    <p:outputLabel value="Nom:" for="nom" />
+                    <p:inputText id="nom" value="#{compteBancairMBean.compteBancaire.nom}" title="Nom" />
+                    <p:outputLabel value="Solde:" for="solde" />
+                    <p:inputText id="solde" value="#{compteBancairMBean.compteBancaire.solde}" title="Solde" />
+                    <p:commandButton id="ajouter" ajax="false" value="Sauvegarder" action="#{compteBancairMBean.addCompte()}" actionListener="#{compteBancairMBean.addCompte}"/>
+                </h:panelGrid>
+            </h:form>
+        </f:view>
+            </ui:define>
+ 
+        </ui:composition>
+    </h:body>
+</html>

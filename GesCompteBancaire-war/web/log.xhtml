@@ -1,0 +1,32 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html">
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <title><ui:insert name="title">Default Title</ui:insert></title>
+        <h:outputStylesheet name="css/jsfcrud.css"/>
+    </h:head>
+    <h:body>
+        <p>
+           
+        <h:form>
+           
+            <h:panelGrid style="float: right; border: 1">
+                <h:outputText value="Login!!" />
+                <h:outputText value="Username"/>
+                <h:inputText value="#{logintblController.selected.username}" />
+                <h:outputText value="Password" />
+                <h:inputSecret  value="#{logintblController.selected.password}" />
+                <h:commandButton action="#{logintblController.validateLogin}" value="Login">
+                   
+                </h:commandButton>
+                <h:outputLabel id="displayResponse" value="#{logintblController.message}" />
+            </h:panelGrid>
+        </h:form>
+    
+        </p>
+    </h:body>
+</html>
