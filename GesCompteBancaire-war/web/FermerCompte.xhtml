@@ -15,6 +15,12 @@
         <ui:composition template="./template.xhtml">
  
             <ui:define name="content">
+                 <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+          <a href="index.html">Dashboard</a>
+        </li>
+        <li class="breadcrumb-item active">Fermeture Compte </li>
+  </ol>
                   <f:view>
 
 
@@ -22,14 +28,14 @@
                 <h1><h:outputText value="Fermeture Compte"/></h1>
                 <h:panelGrid columns="2">
                     
-                    <h:selectOneMenu id="comptebancaire" value="#{compteBancairMBean.compteBancaire}" converter="#{compteBancairMBean.compteConverter}" title="Comptebancaire" >
+                    <h:selectOneMenu id="comptebancaire" class="form-control" value="#{compteBancairMBean.compteBancaire}" converter="#{compteBancairMBean.compteConverter}" title="Comptebancaire" >
                        
                         <f:selectItems value="#{compteBancairMBean.compteBancaires}"  
                        var="item"   
                        itemLabel="#{item.nom}" itemValue="#{item}"/>
                     </h:selectOneMenu>
                 
-                    <h:commandButton value="Fermer" id="ferme" action="#{compteBancairMBean.fermerCompte()}"/>
+                    <h:commandButton value="Fermer" class="btn btn-primary" id="ferme" action="#{compteBancairMBean.fermerCompte()}"/>
                     
                 </h:panelGrid>
             </h:form>

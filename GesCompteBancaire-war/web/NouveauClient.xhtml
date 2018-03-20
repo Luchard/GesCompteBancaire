@@ -7,6 +7,13 @@
        xmlns:p="http://primefaces.org/ui"
       >
     <h:head>
+        <link href="../resources/vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet"></link>
+
+        <link href="../resources/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet"/>
+
+        <link href="../resources/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+
+        <link href="../resources/css/sb-admin.css" rel="stylesheet"></link>
         <title>Creation Client</title>
     </h:head>
    
@@ -15,6 +22,12 @@
         <ui:composition template="./template.xhtml">
  
             <ui:define name="content">
+                 <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+          <a href="index.html">Dashboard</a>
+        </li>
+        <li class="breadcrumb-item active">Nouveau Client </li>
+  </ol>
                     <f:view>
 
 
@@ -25,23 +38,24 @@
                 <h1><h:outputText value="Creation Client"/></h1>
                 <h:panelGrid columns="2">
                     <h:outputLabel value="Nom:" for="nom" />
-                    <h:inputText id="nom" value="#{nouveauClientMBean.client.nom}" title="Nom" />
+                    <h:inputText id="nom" value="#{nouveauClientMBean.client.nom}" class="form-control" title="Nom" />
                     <h:outputLabel value="Prenom:" for="prenom" />
-                    <h:inputText id="prenom" value="#{nouveauClientMBean.client.prenom}" title="Prenom" />
+                    <h:inputText id="prenom" value="#{nouveauClientMBean.client.prenom}" class="form-control" title="Prenom" />
                     
                     <h:outputLabel value="Ville" for="ville" />
-                    <h:inputText id="ville" value="#{nouveauClientMBean.client.addresse.ville}" title="Ville" />
+                    <h:inputText id="ville" value="#{nouveauClientMBean.client.addresse.ville}" class="form-control" title="Ville" />
                     <h:outputLabel value="Rue" for="rue" />
-                    <h:inputText id="rue" value="#{nouveauClientMBean.client.addresse.rue}" title="Rue" />
+                    <h:inputText id="rue" value="#{nouveauClientMBean.client.addresse.rue}" class="form-control" title="Rue" />
                     <h:outputLabel value="Numero" for="numero" />
-                    <h:inputText id="numero" value="#{nouveauClientMBean.client.addresse.numero}" title="Numero" />
+                    <h:inputText id="numero" value="#{nouveauClientMBean.client.addresse.numero}" class="form-control" title="Numero" />
                     
                     
                     <h:outputLabel value="Phone:" for="phone" />
-                    <h:inputText id="phone" value="#{nouveauClientMBean.client.phone}" title="Phone" />
+                    <h:inputText id="phone" value="#{nouveauClientMBean.client.phone}" class="form-control" title="Phone" />
                     <h:outputLabel value="Email:" for="email" />
-                    <h:inputText id="email" value="#{nouveauClientMBean.client.email}" title="Email" />
-                    <h:commandButton value="Creation" action="#{nouveauClientMBean.creeClient}" styleClass="sansLabel" type="submit"/>
+                    <h:inputText id="email" value="#{nouveauClientMBean.client.email}" class="form-control" title="Email" />
+                   
+                    <h:commandButton value="Sauvegarder" action="#{nouveauClientMBean.creeClient}" class="btn btn-primary"  type="submit"/>
                 </h:panelGrid>
             </h:form>
         </f:view>

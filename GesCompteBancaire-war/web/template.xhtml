@@ -1,70 +1,197 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets"
-       xmlns:p="http://primefaces.org/ui"
-       xmlns:f="http://xmlns.jcp.org/jsf/core"
-    xmlns:h="http://java.sun.com/jsf/html">
- 
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html">
+
     <h:head>
+        <link href="../resources/vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet"></link>
+
+        <link href="../resources/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet"/>
+
+        <link href="../resources/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+
+        <link href="../resources/css/sb-admin.css" rel="stylesheet"></link>
     </h:head>
- 
-      <h:body>
+
+    <h:body class="fixed-nav sticky-footer bg-dark" id="page-top">
+        
+         <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
+    <a class="navbar-brand" href="index.xhtml">LuluBank</a>
+    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarResponsive">
+      <ul class="navbar-nav navbar-sidenav" id="exampleAccordion">
+        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Dashboard">
+          <a class="nav-link" href="index.xhtml">
+            <i class="fa fa-fw fa-dashboard"></i>
+            <span class="nav-link-text">Dashboard</span>
+          </a>
+        </li>
+         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Components">
+          <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseClients" data-parent="#exampleAccordion">
+            <i class="fa fa-fw fa-users"></i>
+            <span class="nav-link-text">Clients</span>
+          </a>
+          <ul class="sidenav-second-level collapse" id="collapseClients">
+            <li>
+              <a href="ListeClients.xhtml"> 
+                  <i class="fa fa-fw fa-list"></i>
+            <span class="nav-link-text">Liste Clients</span>
+              </a>
+            </li>
+            <li>
+              <a href="NouveauClient.xhtml">
+                  <i class="fa fa-fw fa-user-plus"></i>
+            <span class="nav-link-text">Nouveau Client</span>
+              </a>
+            </li>
+          </ul>
+        </li>
+           <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Components">
+          <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseComptes" data-parent="#exampleAccordion">
+            <i class="fa fa-fw fa-folder-open"></i>
+            <span class="nav-link-text">Comptes Bancaires</span>
+          </a>
+          <ul class="sidenav-second-level collapse" id="collapseComptes">
+            <li>
+               <a href="ListeCompteBancaires.xhtml"> 
+                  <i class="fa fa-fw fa-list"></i>
+            <span class="nav-link-text">Liste Comptes</span>
+              </a>
+            </li>
+            <li>
+               <a href="NouveauCompte.xhtml">
+                  <i class="fa fa-fw fa-folder-o"></i>
+            <span class="nav-link-text">Nouveau Compte</span>
+              </a>
+            </li>
+          </ul>
+        </li>
       
-        <p:layout fullPage="true">
-
-                <p:layoutUnit position="north" size="100" resizable="true" closable="true" collapsible="true">
-                   
-                </p:layoutUnit>
-
-                <p:layoutUnit position="south" size="100" closable="true" collapsible="true">
+        
+        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Components">
+          <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseComponents" data-parent="#exampleAccordion">
+            <i class="fa fa-fw fa-money"></i>
+            <span class="nav-link-text">Transactions</span>
+          </a>
+          <ul class="sidenav-second-level collapse" id="collapseComponents">
+            <li>
+              <a href="ListeTransaction.xhtml">
+                
+              <i class="fa fa-fw fa-list"></i>
+            <span class="nav-link-text">  Liste Transaction</span>
+              </a>
+            </li>
+            <li>
+              <a href="NouvelleTransaction.xhtml">
                   
-                </p:layoutUnit>
-
-                <p:layoutUnit position="west" size="245"  collapsible="false">
+              <i class="fa fa-fw fa-plus"></i>
+            <span class="nav-link-text">  Nouvelle transaction</span>
+              </a>
+            </li>
+               <li>
                    
-                    <p:menu>
-                    <p:submenu label="Clients">
-                        <p:menuitem value="Liste Client" url="${pageContext.request.contextPath}/faces/ListeClients.xhtml" />    
-                        <p:menuitem value="Nouveau Client" url="${pageContext.request.contextPath}/faces/NouveauClient.xhtml" />
-                           
-                           
+              <a href="VirementCompte.xhtml">
+                 
+               <i class="fa fa-fw fa-credit-card-alt"></i>
+            <span class="nav-link-text">  Virement bancaire</span>
+              </a>
+            </li>
+               <li>
+              <a href="FermerCompte.xhtml">
+               <i class="fa fa-fw fa-close"></i>
+            <span class="nav-link-text">Fermeture compte</span>
+                
+              </a>
+            </li>
+          </ul>
+        </li>
+       
+      </ul>
+      <ul class="navbar-nav sidenav-toggler">
+        <li class="nav-item">
+          <a class="nav-link text-center" id="sidenavToggler">
+            <i class="fa fa-fw fa-angle-left"></i>
+          </a>
+        </li>
+      </ul>
+      <ul class="navbar-nav ml-auto">
+       
+        <li class="nav-item">
+          <form class="form-inline my-2 my-lg-0 mr-lg-2">
+            <div class="input-group">
+              <input class="form-control" type="text" placeholder="Search for..."/>
+              <span class="input-group-append">
+                <button class="btn btn-primary" type="button">
+                  <i class="fa fa-search"></i>
+                </button>
+              </span>
+            </div>
+          </form>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" data-toggle="modal" data-target="#exampleModal">
+            <i class="fa fa-fw fa-sign-out"></i>Logout</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
 
-                        </p:submenu>
-
-                    
-                   
-                          <p:submenu label="Comptes Bancaires">
-                            <p:menuitem value="Liste Comptes Bancaires" url="${pageContext.request.contextPath}/faces/ListeCompteBancaires.xhtml" />
-                           <p:menuitem value="Nouveau compte" url="${pageContext.request.contextPath}/faces/NouveauCompte.xhtml" />
-                           <p:menuitem value="Virement compte" url="${pageContext.request.contextPath}/faces/VirementCompte.xhtml" />
-                           <p:menuitem value="Fermer compte" url="${pageContext.request.contextPath}/faces/FermerCompte.xhtml" />
-                          </p:submenu>
-
-                       <p:submenu label="Transactions">
-                            <p:menuitem value="Nouvelle Transaction" url="${pageContext.request.contextPath}/faces/NouvelleTransaction.xhtml" />
-                           <p:menuitem value="Liste Transaction" url="${pageContext.request.contextPath}/faces/ListeTransaction.xhtml" />
-                          
-                          </p:submenu>
-
-                    </p:menu>
-                </p:layoutUnit>
-
-                <p:layoutUnit position="center">
-                <ui:insert name="content">
+         <div class="content-wrapper">
+    <div class="container-fluid">
+      <!-- Breadcrumbs-->
+     
+      <div class="row">
+        <div class="col-12">
+         
+           <ui:insert name="content">
                     Default Content
                 </ui:insert>
+        </div>
+      </div>
+    </div>
+         </div>
+           
 
-                </p:layoutUnit>
+         
+              
+   <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">×</span>
+            </button>
+          </div>
+          <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+          <div class="modal-footer">
+            <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+            <a class="btn btn-primary" href="login.html">Logout</a>
+          </div>
+        </div>
+      </div>
+    </div>
+          
 
-            </p:layout>
 
-        
-        
-        
-       
+<script src="../resources/vendor/jquery/jquery.min.js"></script>
+    <script src="../resources/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  
+    <script src="../resources/vendor/jquery-easing/jquery.easing.min.js"></script>
+ 
+    <!-- Custom scripts for all pages-->
+    
+    <!-- Custom scripts for this page-->
+   <script src="../resources/vendor/chart.js/Chart.min.js"></script>
+    <script src="../resources/js/sb-admin.min.js"></script>
+ <script src="../resources/js/sb-admin-charts.min.js"></script>
 
     </h:body>
-    
-    
-  
+
+
+
 </html>

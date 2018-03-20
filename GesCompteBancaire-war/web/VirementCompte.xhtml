@@ -7,6 +7,13 @@
       xmlns:ui="http://java.sun.com/jsf/facelets"
       >
     <h:head>
+          <link href="../resources/vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet"></link>
+
+        <link href="../resources/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet"/>
+
+        <link href="../resources/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+
+        <link href="../resources/css/sb-admin.css" rel="stylesheet"></link>
         <title>Transaction</title>
     </h:head>
 
@@ -14,6 +21,12 @@
         <ui:composition template="./template.xhtml">
 
             <ui:define name="content">
+                 <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+          <a href="index.html">Dashboard</a>
+        </li>
+        <li class="breadcrumb-item active">Virement Bancaire </li>
+  </ol>
                 <f:view>
 
 
@@ -22,7 +35,7 @@
                         <h:panelGrid columns="2">
 
                             <h:outputLabel value="Comptebancaire 1:" for="comptebancaire" />
-                            <h:selectOneMenu id="comptebancaire" value="#{compteBancairMBean.compteBancaire}" converter="#{compteBancairMBean.compteConverter}" title="Comptebancaire" >
+                            <h:selectOneMenu id="comptebancaire" class="form-control" value="#{compteBancairMBean.compteBancaire}" converter="#{compteBancairMBean.compteConverter}" title="Comptebancaire" >
 
                                 <f:selectItems value="#{compteBancairMBean.compteBancaires}"  
                                                var="item"   
@@ -30,14 +43,14 @@
                             </h:selectOneMenu>
 
                             <h:outputLabel value="Comptebancaire 2:" for="comptebancaire" />
-                            <h:selectOneMenu id="comptebancairevire" value="#{compteBancairMBean.compteBancaireVire}" converter="#{compteBancairMBean.compteConverter}" title="Comptebancaire" >
+                            <h:selectOneMenu id="comptebancairevire" class="form-control" value="#{compteBancairMBean.compteBancaireVire}" converter="#{compteBancairMBean.compteConverter}" title="Comptebancaire" >
 
                                 <f:selectItems value="#{compteBancairMBean.compteBancaires}"  
                                                var="item"   
                                                itemLabel="#{item.nom}" itemValue="#{item}"/>
                             </h:selectOneMenu>
                             <h:outputLabel value="Client:" for="client" />
-                            <h:selectOneMenu id="client" value="#{compteBancairMBean.client}" title="Client"
+                            <h:selectOneMenu id="client" class="form-control" value="#{compteBancairMBean.client}" title="Client"
                                              converter="#{compteBancairMBean.clientConverter}" >
                                 <!-- TODO: update below reference to list of available items-->
                                 <f:selectItems value="#{clientMBean.clients}"
@@ -45,13 +58,13 @@
                             </h:selectOneMenu>
 
                             <h:outputLabel value="Montant:" for="montant" />
-                            <h:inputText id="montant" value="#{compteBancairMBean.transaction.montant}" title="Montant" />
+                            <h:inputText id="montant" class="form-control" value="#{compteBancairMBean.transaction.montant}" title="Montant" />
 
                             <h:outputLabel value="DateTransaction:" for="dateTransaction" />
-                            <h:inputText id="dateTransaction" value="#{compteBancairMBean.transaction.dateTransaction}" title="DateTransaction" >
+                            <h:inputText id="dateTransaction" class="form-control" value="#{compteBancairMBean.transaction.dateTransaction}" title="DateTransaction" >
                                 <f:convertDateTime pattern="MM/dd/yyyy" />
                             </h:inputText>
-                            <h:commandButton value="Virement" id="virement" action="#{compteBancairMBean.sauvegarderVirement()}"/>
+                            <h:commandButton class="btn btn-primary" value="Virement" id="virement" action="#{compteBancairMBean.sauvegarderVirement()}"/>
 
                         </h:panelGrid>
                     </h:form>

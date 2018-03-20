@@ -17,6 +17,12 @@
         <ui:composition template="./template.xhtml">
  
             <ui:define name="content">
+                 <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+          <a href="index.html">Dashboard</a>
+        </li>
+        <li class="breadcrumb-item active">Liste des Transactions </li>
+  </ol>
                    <f:view>
 
 
@@ -33,13 +39,13 @@
                         <f:facet name="header">
                             <h:outputText value="Comptebancaire"/>
                         </f:facet>
-                        <h:outputText value="#{item.comptebancaire.nom}"/>
+                        <h:outputText value="#{item.comptebancaire.id}"/>
                     </p:column>
                     <p:column>
                         <f:facet name="header">
                             <h:outputText value="Client"/>
                         </f:facet>
-                        <h:outputText value="#{item.client.nom}"/>
+                        <h:outputText value="#{item.client.prenom} #{item.client.nom}"/>
                     </p:column>
                     <p:column>
                         <f:facet name="header">

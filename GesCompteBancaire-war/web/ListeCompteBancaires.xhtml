@@ -16,6 +16,12 @@
         <ui:composition template="./template.xhtml">
  
             <ui:define name="content">
+                 <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+          <a href="index.html">Dashboard</a>
+        </li>
+        <li class="breadcrumb-item active">Liste des Comptes Bancaires </li>
+  </ol>
                   <f:view>
 
 
@@ -45,6 +51,12 @@
                             <h:outputText value="Nom Propriétaire"/>
                         </f:facet>
                         <h:outputText value="#{item.client.nom}   #{item.client.prenom}"/>
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="Type De Compte"/>
+                        </f:facet>
+                        <h:outputText value="#{item.typeCompte.nom}"/>
                     </p:column>
                     
                     <p:column>

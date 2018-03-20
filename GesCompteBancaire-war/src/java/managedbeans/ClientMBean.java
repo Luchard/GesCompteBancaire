@@ -23,6 +23,17 @@ public class ClientMBean implements Serializable {
 
     @EJB
     private GestionnaireDeClient gestionnaireDeClient;
+    
+    private int nombreClient ;
+
+    public int getNombreClient() {
+        return (gestionnaireDeClient.getAllClients()).size();
+    }
+
+    public void setNombreClient(int nombreClient) {
+        this.nombreClient = nombreClient;
+    }
+    
 
     /**
      * Creates a new instance of ClientMBean
@@ -34,6 +45,8 @@ public class ClientMBean implements Serializable {
         // gestionnaireDeClient.creerComptesTest();
         return gestionnaireDeClient.getAllClients();
     }
+    
+   
 
     public String showDetails(int clientId) {
         return "ClientDetails?idClient=" + clientId;
