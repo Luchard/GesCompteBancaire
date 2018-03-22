@@ -38,6 +38,17 @@ public class GestionnaireDeClient {
       Query query = em.createNamedQuery("Client.findAll");  
         return query.getResultList();
     }
+    
+        public List<Client> getAllClientsById(Long idClient) {
+       // Query query = em.createNamedQuery("Customer.findAll");
+      //  return query.getResultList();
+  //  Query query =  em.createQuery("SELECT c FROM CompteBancaire c");
+    //return query.getResultList();
+     
+      Query query = em.createNamedQuery("Client.findByClientId");  
+      query.setParameter("clientId", idClient);
+        return query.getResultList();
+    }
 
     public void creerComptesTest() {
         creerClient(new Client("Orelus", "Luchard"));

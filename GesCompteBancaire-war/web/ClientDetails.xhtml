@@ -19,41 +19,38 @@
         <ui:composition template="./template.xhtml">
  
             <ui:define name="content">
-                 <f:view>
+                <f:view>
+                     <f:view>
 
 
             <h:form>
                 <h1><h:outputText value="Details Du client"/></h1>
                 <p:panelGrid columns="2">
                     <p:outputLabel value="Nom:" for="nom" />
-                    <p:inputText id="nom" value="#{clientDetailsMBean.details.nom}" title="Nom" />
+                    <p:inputText id="nom" value="#{clientDetailsMBean.details.nom}" class="form-control" title="Nom" />
                     <p:outputLabel value="Prenom:" for="prenom" />
-                    <p:inputText id="prenom" value="#{clientDetailsMBean.details.prenom}" title="Prenom" />
+                    <p:inputText id="prenom" value="#{clientDetailsMBean.details.prenom}" class="form-control" title="Prenom" />
                     <p:outputLabel value="Ville:" for="ville" />
-                    <p:inputText id="ville" value="#{clientDetailsMBean.details.addresse.ville}" title="Ville" />
+                    <p:inputText id="ville" value="#{clientDetailsMBean.details.addresse.ville}" class="form-control" title="Ville" />
                     <p:outputLabel value="Rue" for="rue" />
-                    <p:inputText id="rue" value="#{clientDetailsMBean.details.addresse.rue}" title="Rue" />
+                    <p:inputText id="rue" value="#{clientDetailsMBean.details.addresse.rue}" class="form-control" title="Rue" />
                     <p:outputLabel value="No:" for="no" />
-                    <p:inputText id="no" value="#{clientDetailsMBean.details.addresse.numero}" title="No" />
+                    <p:inputText id="no" value="#{clientDetailsMBean.details.addresse.numero}" class="form-control" title="No" />
                     <p:outputLabel value="Phone:" for="phone" />
-                    <p:inputText id="phone" value="#{clientDetailsMBean.details.phone}" title="Phone" />
+                    <p:inputText id="phone" value="#{clientDetailsMBean.details.phone}" class="form-control" title="Phone" />
                     <p:outputLabel value="Email:" for="email" />
-                    <p:inputText id="email" value="#{clientDetailsMBean.details.email}" title="Email" />
+                    <p:inputText id="email" value="#{clientDetailsMBean.details.email}" class="form-control" title="Email" />
                    
-                    
-<!--                    <h:outputLabel value="Liste Comptes Bancaires:" for="comptebancaire" />
-                    <h:selectOneMenu id="comptebancaire" title="Client" >
-                        <f:selectItems value="#{clientDetailsMBean.details.compteBancaires}"  
-                                                   var="item"   
-                                                   itemLabel="#{item.nom}" itemValue="#{item}" /> 
-                    </h:selectOneMenu>-->
-                   
+                  
+                 
                 </p:panelGrid>
-                 <p:commandButton id="update" value="Modifier" action="#{clientDetailsMBean.update}"/>
                    
+                  <p:commandButton class="btn btn-primary" id="update" value="Modifier" action="#{clientDetailsMBean.update}"/>
                 
             </h:form>
         </f:view>
+                </f:view>
+                
             </ui:define>
  
         </ui:composition>

@@ -30,38 +30,27 @@ public class GestionnaireDeCompteBancaire {
 
     public void creerCompteBancaire(String proprietaire, int montant) {
         CompteBancaire cBancaire = new CompteBancaire();
-        cBancaire.setNom(proprietaire);
+      
         cBancaire.setSolde(montant);
         em.persist(cBancaire);
     }
 
     public List<CompteBancaire> getAllComptes() {
-        // Query query = em.createNamedQuery("Customer.findAll");
-        //  return query.getResultList();
-        //  Query query =  em.createQuery("SELECT c FROM CompteBancaire c");
-        //return query.getResultList();
-
         Query query = em.createNamedQuery("CompteBancaire.findAll");
         return query.getResultList();
     }
 
     public List<CompteBancaire> getAllComptes(Long id_client) {
-        // Query query = em.createNamedQuery("Customer.findAll");
-        //  return query.getResultList();
-        //  Query query =  em.createQuery("SELECT c FROM CompteBancaire c");
-        //return query.getResultList();
-
         Query query = em.createNamedQuery("CompteBancaire.findCompteByClientId");
-
         query.setParameter("clientId", id_client);
         return query.getResultList();
     }
 
     public void creerComptesTest() {
-        creerCompteBancaire(new CompteBancaire("John Lennon", 150000));
-        creerCompteBancaire(new CompteBancaire("Paul McCartney", 950000));
-        creerCompteBancaire(new CompteBancaire("Ringo Starr", 20000));
-        creerCompteBancaire(new CompteBancaire("Georges Harrisson", 100000));
+        creerCompteBancaire(new CompteBancaire(150000));
+        creerCompteBancaire(new CompteBancaire(950000));
+        creerCompteBancaire(new CompteBancaire(20000));
+        creerCompteBancaire(new CompteBancaire(100000));
     }
     // Add business logic below. (Right-click in editor and choose
     // "Insert Code > Add Business Method")

@@ -39,7 +39,7 @@
 
                                 <f:selectItems value="#{compteBancairMBean.compteBancaires}"  
                                                var="item"   
-                                               itemLabel="#{item.nom}" itemValue="#{item}"/>
+                                               itemLabel="#{item.id}" itemValue="#{item}"/>
                             </h:selectOneMenu>
 
                             <h:outputLabel value="Comptebancaire 2:" for="comptebancaire" />
@@ -47,7 +47,7 @@
 
                                 <f:selectItems value="#{compteBancairMBean.compteBancaires}"  
                                                var="item"   
-                                               itemLabel="#{item.nom}" itemValue="#{item}"/>
+                                               itemLabel="#{item.id}" itemValue="#{item}"/>
                             </h:selectOneMenu>
                             <h:outputLabel value="Client:" for="client" />
                             <h:selectOneMenu id="client" class="form-control" value="#{compteBancairMBean.client}" title="Client"

@@ -6,12 +6,18 @@
 package session;
 
 import entity.Utilisateur;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.ejb.LocalBean;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import services.DBCon;
 
 /**
  *
@@ -47,12 +53,60 @@ public class GestionnaireUtilisateur {
 }
 
     
+        public void creerUtilisateursDeTest() {  
+        creeUtilisateur("John", "Lennon", "jlennon");  
+        creeUtilisateur("Paul", "Mac Cartney", "pmc");  
+        creeUtilisateur("Ringo", "Starr", "rstarr");  
+        creeUtilisateur("Georges", "Harisson", "georgesH");  
+    }  
+  
+    public void creeUtilisateur(String nom, String prenom, String login) {  
+        Utilisateur u = new Utilisateur(nom, prenom, login);  
+        em.persist(u);  
+          
+    }
+    
     public Utilisateur getUtilisateur(String username , String password) {  
         Query query = em.createNamedQuery("Utilisateur.findByUsernameAndPassword");  
         query.setParameter("username", username);
         query.setParameter("password", password);
+        
         return (Utilisateur) query.getSingleResult();
+        
        // return query.getResultList();
 }
+    
+    public  boolean login(String user, String password) {
+		
+		try {
+			Query query = em.createNamedQuery("Utilisateur.findByUsernameAndPassword");  
+        query.setParameter("username", user);
+        query.setParameter("password", password);
+
+			//ResultSet rs = (ResultSet) query.getSingleResult();
+                        
+                     Utilisateur  u = (Utilisateur) query.getSingleResult();
+			if (u.getId() > 0) // found
+			{
+				System.out.println(u.getUsername());
+				return true;
+			}
+			else {
+				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN,
+						"LoginDAO!",
+						"Wrong password message test!"));
+				return false;
+			}
+		} 
+		catch (Exception ex) {
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
+					"Database Error",
+					"Unable to connect database"));            
+			System.out.println("Error in login() -->" + ex.getMessage());
+			return false;
+		} 
+	}
+
+	
     
 }

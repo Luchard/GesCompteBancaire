@@ -5,8 +5,6 @@
  */
 package session;
 
-
-
 import entity.TransactionBancaire;
 import java.util.List;
 import javax.ejb.Stateless;
@@ -29,25 +27,32 @@ public class GestionnaireTransaction {
     public void persist(TransactionBancaire transactionBancaire) {
         em.persist(transactionBancaire);
     }
-    
+
     public List<TransactionBancaire> getAllTransactions() {
-    
-      Query query = em.createNamedQuery("TransactionBancaire.findAll");  
+
+        Query query = em.createNamedQuery("TransactionBancaire.findAll");
         return query.getResultList();
     }
 
     public List<TransactionBancaire> getAllTransactionsByCompte(Long idCompte) {
-    
-      Query query = em.createNamedQuery("TransactionBancaire.findAllByCompteId");
-      query.setParameter("compteId", idCompte);
+
+        Query query = em.createNamedQuery("TransactionBancaire.findAllByCompteId");
+        query.setParameter("compteId", idCompte);
         return query.getResultList();
     }
-    
-      public TransactionBancaire getTransaction(Integer idTransaction) {  
-        return em.find(TransactionBancaire.class, idTransaction);  
-}
-      
-      public void creerTransactionBancaire(TransactionBancaire tBancaire) {
+
+    public List<TransactionBancaire> getAllTransactionsByClient(Long idClient) {
+
+        Query query = em.createNamedQuery("TransactionBancaire.findAllByClientId");
+        query.setParameter("clientId", idClient);
+        return query.getResultList();
+    }
+
+    public TransactionBancaire getTransaction(Integer idTransaction) {
+        return em.find(TransactionBancaire.class, idTransaction);
+    }
+
+    public void creerTransactionBancaire(TransactionBancaire tBancaire) {
         em.persist(tBancaire);
     }
     // Add business logic below. (Right-click in editor and choose

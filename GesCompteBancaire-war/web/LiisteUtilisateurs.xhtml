@@ -1,0 +1,91 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" 
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:h="http://java.sun.com/jsf/html"
+       xmlns:f="http://xmlns.jcp.org/jsf/core"
+    xmlns:p="http://primefaces.org/ui"
+    >
+    <h:head>
+         <link href="../resources/vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet"></link>
+
+        <link href="../resources/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet"/>
+
+        <link href="../resources/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+
+        <link href="../resources/css/sb-admin.css" rel="stylesheet"></link>
+        <title>Liste Utilisateurs</title>
+    </h:head>
+  
+    
+  
+        <h:body>
+          
+      
+        <ui:composition template="./template.xhtml">
+ 
+            <ui:define name="content">
+                 <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+          <a href="index.xhtml">Dashboard</a>
+        </li>
+        <li class="breadcrumb-item active">Liste Utilisateurs </li>
+  </ol>
+                 <f:view>
+         
+
+
+                     <h:form>
+                         <h1><h:outputText value="Liste des utilisateurs"/></h1>
+                         <p:dataTable value="#{utilisateursMBean.utilisateurs}" var="item"
+                             widgetVar="utilisateurTable"
+                             paginator="true" rows="10"
+                             emptyMessage="No customer found with given criteria">
+                    
+                    
+                            <f:facet name="header">    
+    <p:outputPanel>    
+        <h:outputText value="Search all fields:" />    
+        <p:inputText id="globalFilter" onkeyup="utilisateurTable.filter()" style="width:150px" />    
+    </p:outputPanel>    
+</f:facet>
+                             
+                               <p:column headerText="Utilisateurs"  
+          sortBy="#{item.id}"  
+          filterBy="#{item.id}"  
+          filterMatchMode="contains">
+                                 <h:outputText value="#{item.id}"/>
+                               </p:column>
+                        
+
+                             <p:column>
+                                 <f:facet name="header">
+                                     <h:outputText value="Prenom"/>
+                                 </f:facet>
+                                 <h:outputText value="#{item.prenom}"/>
+                             </p:column>
+                             <p:column>
+                                 <f:facet name="header">
+                                     <h:outputText value="Nom"/>
+                                 </f:facet>
+                                 <h:outputText value="#{item.nom}"/>
+                             </p:column>
+                             <p:column>
+                                 <f:facet name="header">
+                                     <h:outputText value="Username"/>
+                                 </f:facet>
+                                 <h:outputText value="#{item.username}"/>
+                             </p:column>
+                            
+                           
+                         </p:dataTable>
+                     </h:form>
+
+                     
+        </f:view>
+            </ui:define>
+ 
+        </ui:composition>
+    </h:body>
+</html>
+

@@ -9,8 +9,11 @@ import entity.Client;
 import entity.CompteBancaire;
 import entity.TransactionBancaire;
 import entity.TypeCompte;
+import entity.TypeUtilisateur;
+import entity.Utilisateur;
 import java.io.Serializable;
 import java.util.List;
+import javax.annotation.Resource;
 import javax.ejb.EJB;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
@@ -18,6 +21,12 @@ import javax.faces.convert.Converter;
 import javax.faces.event.ActionEvent;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
+import javax.inject.Inject;
+import javax.jms.JMSConnectionFactory;
+import javax.jms.JMSContext;
+import javax.jms.Queue;
+import javax.servlet.http.HttpSession;
+import services.Util;
 import session.GestionnaireDeClient;
 import session.GestionnaireDeCompteBancaire;
 import session.GestionnaireTransaction;
@@ -30,6 +39,13 @@ import session.GestionnaireTypeCompte;
 @Named(value = "compteBancairMBean")
 @ViewScoped
 public class CompteBancaireMBean implements Serializable {
+
+    @Resource(mappedName = "java:app/jms/loggingMessages")
+    private Queue java_appJmsLoggingMessages;
+
+    @Inject
+    @JMSConnectionFactory("java:comp/DefaultJMSConnectionFactory")
+    private JMSContext context;
 
     @EJB
     private GestionnaireTypeCompte gestionnaireTypeCompte;
@@ -48,7 +64,6 @@ public class CompteBancaireMBean implements Serializable {
     private final TransactionBancaire transaction1;
     @EJB
     private GestionnaireDeClient gestionnaireDeClient;
-    
 
     private CompteBancaire compteBancaire = new CompteBancaire();
     private CompteBancaire compteBancaireVire = new CompteBancaire();
@@ -64,7 +79,6 @@ public class CompteBancaireMBean implements Serializable {
         this.typeCompte = typeCompte;
     }
 
-    
     public CompteBancaire getCompteBancaire() {
         return compteBancaire;
     }
@@ -98,21 +112,28 @@ public class CompteBancaireMBean implements Serializable {
         this.transaction1 = new TransactionBancaire();
     }
 
-     public List<TypeCompte> getTypeComptes() {
+    public List<TypeCompte> getTypeComptes() {
         // gestionnaireDeClient.creerComptesTest();
         return gestionnaireTypeCompte.getAllTypeCompte();
     }
-    
+
     public List<CompteBancaire> getCompteBancaires() {
         //gestionnaireDeCompteBancaire.creerComptesTest();
-        return gestionnaireDeCompteBancaire.getAllComptes();
+        
+        HttpSession session = Util.getSession();
+        Utilisateur u = (Utilisateur) session.getAttribute("Utilisateur");
+        if (u.getTypeUtilisateur() == TypeUtilisateur.CLIENT) {
+            return gestionnaireDeCompteBancaire.getAllComptes(u.getClient().getId());
+        } else {
+            return gestionnaireDeCompteBancaire.getAllComptes();
+        }
+        
+        
     }
 
-    // public List<CompteBancaire> getCompteBancaires(Long clientId) {
-    //gestionnaireDeCompteBancaire.creerComptesTest();
-    //     clientId = client.getId();
-    //  return gestionnaireDeCompteBancaire.getAllComptes(clientId);
-    // }
+    public List<CompteBancaire> getCompteBancaires(Long clientId) {
+        return gestionnaireDeCompteBancaire.getAllComptes(clientId);
+    }
     private final Converter clientConverter = new Converter() {
 
         @Override
@@ -134,8 +155,8 @@ public class CompteBancaireMBean implements Serializable {
 
         return compteBancaireConverter;
     }
-    
-        private final Converter typeCompteConverter = new Converter() {
+
+    private final Converter typeCompteConverter = new Converter() {
 
         @Override
         public Object getAsObject(FacesContext context, UIComponent component, String value) {
@@ -239,4 +260,9 @@ public class CompteBancaireMBean implements Serializable {
         gestionnaireDeCompteBancaire.fermerCompte(compteBancaire.getId());
         return "ListeClients.xhtml";
     }
+
+    private void sendJMSMessageToLoggingMessages(String messageData) {
+        context.createProducer().send(java_appJmsLoggingMessages, messageData);
+    }
+
 }

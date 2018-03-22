@@ -39,10 +39,12 @@ public class CompteBancaire implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private String nom;
+   
     private int solde;
     @ManyToOne 
     private Client client;
+    @ManyToOne
+    private TypeCompte typeCompte;
     @OneToMany(mappedBy = "comptebancaire")
     private List<TransactionBancaire> transactions;
 
@@ -51,9 +53,18 @@ public class CompteBancaire implements Serializable {
         
     }
 
-    public CompteBancaire(String nom, int solde) {
+    public TypeCompte getTypeCompte() {
+        return typeCompte;
+    }
+
+    public void setTypeCompte(TypeCompte typeCompte) {
+        this.typeCompte = typeCompte;
+    }
+
+    
+    public CompteBancaire( int solde) {
         this();
-        this.nom = nom;
+       this.typeCompte = new TypeCompte();
         this.solde = solde;
     }
 
@@ -106,13 +117,7 @@ public class CompteBancaire implements Serializable {
         }
     }
 
-    public String getNom() {
-        return nom;
-    }
 
-    public void setNom(String nom) {
-        this.nom = nom;
-    }
 
     public int getSolde() {
         return solde;

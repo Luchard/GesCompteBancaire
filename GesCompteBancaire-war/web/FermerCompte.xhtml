@@ -32,7 +32,7 @@
                        
                         <f:selectItems value="#{compteBancairMBean.compteBancaires}"  
                        var="item"   
-                       itemLabel="#{item.nom}" itemValue="#{item}"/>
+                       itemLabel="#{item.id}" itemValue="#{item}"/>
                     </h:selectOneMenu>
                 
                     <h:commandButton value="Fermer" class="btn btn-primary" id="ferme" action="#{compteBancairMBean.fermerCompte()}"/>
