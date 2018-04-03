@@ -34,7 +34,7 @@ public class UtilisateursMBean implements Serializable {
     
         public List<Utilisateur> getUtilisateurs() {
         // gestionnaireDeClient.creerComptesTest();
-        gestionnaireUtilisateur.creerUtilisateursDeTest();
+     
         return gestionnaireUtilisateur.getAllUtilisateurs();
     }
     

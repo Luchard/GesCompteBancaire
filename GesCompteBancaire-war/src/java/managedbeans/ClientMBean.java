@@ -30,8 +30,18 @@ public class ClientMBean implements Serializable {
 
     private int nombreClient;
 
-    public int getNombreClient() {
-        return (gestionnaireDeClient.getAllClients()).size();
+    public int getNombreClient() {   
+        HttpSession session = Util.getSession();
+        Utilisateur u = (Utilisateur) session.getAttribute("Utilisateur");
+        if (u.getTypeUtilisateur() == TypeUtilisateur.CLIENT) {
+            return 1;
+        } else {
+            return (gestionnaireDeClient.getAllClients()).size();
+        }
+        
+        
+        
+       
     }
 
     public void setNombreClient(int nombreClient) {

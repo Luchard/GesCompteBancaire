@@ -8,18 +8,32 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets">
 
 <h:head>
+   
+  
+  <!-- Bootstrap core CSS-->
+  <link href="${facesContext.externalContext.requestContextPath}/resources/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet"></link>
+  <!-- Custom fonts for this template-->
+  <link href="${facesContext.externalContext.requestContextPath}/resources/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css"></link>
+  <!-- Custom styles for this template-->
+  <link href="${facesContext.externalContext.requestContextPath}/resources/css/sb-admin.css" rel="stylesheet"></link>
 	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
 	<title>Login Page</title>
-	<link type="text/css"
+<!--	<link type="text/css"
 		href="${facesContext.externalContext.requestContextPath}/resources/css/style.css"
 		rel="stylesheet" />
 	<link type="image/x-icon"
 		href="${facesContext.externalContext.requestContextPath}/resources/images/favicon.ico"
-		rel="shortcut icon" />
+		rel="shortcut icon" />-->
 </h:head>
 
-<h:body>
-	<div id="message">
+    <h:body class="bg-dark">
+   
+  <div class="container">
+    <div class="card card-login mx-auto mt-5">
+      <div class="card-header">Login</div>
+      <div class="card-body">
+      
+<!--	<div id="message">
 	<p:ajaxStatus style="display:block;  margin-top:.5em;">
 		<f:facet name="default">
 			<h:outputText value="Please enter your credentials." />
@@ -31,30 +45,43 @@
 			<h:outputText value="Please try again #{loginBean.uname}, Database/Login error!!" />
 		</f:facet>
 	</p:ajaxStatus>
-	</div>	
+	</div>	-->
 
 	<h:form id="loginForm">
-		<p:growl id="msg" showDetail="true" life="4000" />
-		<p:panel id="loginPnl" header="Login"
-			style="width: 350px; margin: 0 auto;">
-			<h:panelGrid id="loginPanel" columns="2" cellpadding="5">
-				<h:outputText value="Username" />
-				<p:inputText id="username" value="#{loginBean.uname}"></p:inputText>
-				<p:spacer /><p:spacer />	
-				<h:outputText value="Password" />
-				<p:password id="password" value="#{loginBean.password}"
+		
+		
+                            <div class="form-group">
+            <label for="exampleInputEmail1">Username</label>
+       
+     <p:inputText class="form-control" id="username" value="#{loginBean.uname}"></p:inputText>
+			
+                            </div>
+            
+             <div class="form-group">
+            <label for="exampleInputPassword1">Password</label>
+           
+         <p:password id="password" class="form-control" value="#{loginBean.password}"
 					feedback="false"></p:password>
-				<p:message for="password"></p:message>
-			</h:panelGrid>
-			<h:panelGrid columns="1" cellpadding="10" width="100%">
-                            <p:commandButton id="loginButton" action="#{loginBean.login}"
-					value="Login" update="loginForm" ajax="true" style="float: right;">
+             </div>
+          <div class="form-group">
+            <div class="form-check">
+              <label class="form-check-label">
+                <input class="form-check-input" type="checkbox"/> Remember Password</label>
+            </div>
+          </div>		
+                            <p:commandButton id="loginButton" class="btn btn-primary btn-block" action="#{loginBean.login}"
+					value="Login">
 				</p:commandButton>
-			</h:panelGrid>
-		</p:panel>
-		<p:blockUI block="loginPnl" trigger="loginButton">
-			<p:graphicImage value="resources/images/loader.gif" />
-		</p:blockUI>
+			
+		
+		
 	</h:form>
-</h:body>
+<div class="text-center">
+          <a class="d-block small mt-3" href="${facesContext.externalContext.requestContextPath}/faces/register.html">Register an Account</a>
+          <a class="d-block small" href="${facesContext.externalContext.requestContextPath}/faces/forgot-password.html">Forgot Password?</a>
+        </div>
+      </div>
+    </div>
+  </div>
+           </h:body>
 </html>

@@ -62,7 +62,8 @@ public class Utilisateur implements Serializable {
         this.nom = nom;
         this.prenom = prenom;
         this.username = username;
-        this.typeUtilisateur = TypeUtilisateur.CLIENT;
+        this.typeUtilisateur = TypeUtilisateur.CAISSIER;
+        this.password = "password";
         this.statutCompte = StatutCompte.ACTIF;
     }
 

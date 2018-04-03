@@ -25,8 +25,9 @@ public class GestionnaireDeClient {
     @PersistenceContext(unitName = "GesCompteBancaire-ejbPU")
     private EntityManager em;
 
-    public void creerClient(Client c) {
+    public Client creerClient(Client c) {
         em.persist(c);
+        return c;
     }
 
     public List<Client> getAllClients() {

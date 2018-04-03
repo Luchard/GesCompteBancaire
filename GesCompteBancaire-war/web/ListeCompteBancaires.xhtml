@@ -52,13 +52,19 @@
                         </f:facet>
                         <h:outputText value="#{item.client.nom}   #{item.client.prenom}"/>
                     </p:column>
+                     <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="Numéro De Compte"/>
+                        </f:facet>
+                         <h:outputText value="#{item.numeroCompte}"/>
+                    </p:column>
                     <p:column>
                         <f:facet name="header">
                             <h:outputText value="Type De Compte"/>
                         </f:facet>
                         <h:outputText value="#{item.typeCompte.nom}"/>
                     </p:column>
-                    
+                
                     <p:column>
                         <f:facet name="header">
                             <h:outputText value="Solde"/>

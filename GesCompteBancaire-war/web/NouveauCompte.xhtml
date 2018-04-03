@@ -35,7 +35,8 @@
                 <h1><h:outputText value="Create/Edit"/></h1>
                 <h:panelGrid columns="2">
                   
-                   <h:outputLabel value="Client:" for="client" />
+                   <h:outputLabel value="Client:"  />
+                   
                     
                     <h:selectOneMenu id="client" value="#{compteBancairMBean.client}" class="form-control" title="Client"
                                      converter="#{compteBancairMBean.clientConverter}" >
@@ -44,7 +45,7 @@
                                        var="item" itemLabel="#{item.nom} #{item.prenom}"  itemValue="#{item}" />
                     </h:selectOneMenu>
                     
-                     <h:outputLabel value="Type de Compte:" for="typecompte" />
+                     <h:outputLabel value="Type de Compte:" />
                     
                      <h:selectOneMenu id="typeCompte" value="#{compteBancairMBean.typeCompte}" class="form-control" title="Type de Compte"
                                       converter="#{compteBancairMBean.typeCompteConverter}" >
@@ -53,10 +54,12 @@
                                        var="item" itemLabel="#{item.nom}"  itemValue="#{item}" />
                     </h:selectOneMenu>
                     
+                     <p:outputLabel value="Numéro Compte Bancaire"/>
+                     <p:inputText id="numerocompte" class="form-control" title="Numéro compte" value="#{compteBancairMBean.compteBancaire.numeroCompte}"/>
                     
                     <p:outputLabel value="Solde:" for="solde" />
                     <p:inputText id="solde" value="#{compteBancairMBean.compteBancaire.solde}" class="form-control" title="Solde" />
-                    <p:commandButton id="ajouter" ajax="false" value="Sauvegarder" class="btn btn-primary"  action="#{compteBancairMBean.addCompte()}" actionListener="#{compteBancairMBean.addCompte}"/>
+                    <p:commandButton id="ajouter" ajax="false" value="Sauvegarder" class="btn btn-primary"  action="#{compteBancairMBean.addCompte}" actionListener="#{compteBancairMBean.addCompte}"/>
                 </h:panelGrid>
             </h:form>
         </f:view>

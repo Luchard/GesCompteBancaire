@@ -29,9 +29,9 @@ public class LoginBean implements Serializable {
     @EJB
     private GestionnaireUtilisateur gestionnaireUtilisateur;
 
-     private String password;
+    private String password;
     private String message, uname;
- private Utilisateur utilisateur;
+    private Utilisateur utilisateur;
 
     public Utilisateur getUtilisateur() {
         return utilisateur;
@@ -40,63 +40,64 @@ public class LoginBean implements Serializable {
     public void setUtilisateur(Utilisateur utilisateur) {
         this.utilisateur = utilisateur;
     }
-    
-    
+
     public String getMessage() {
         return message;
     }
- 
+
     public void setMessage(String message) {
         this.message = message;
     }
- 
+
     public String getPassword() {
         return password;
     }
- 
+
     public void setPassword(String password) {
         this.password = password;
     }
- 
+
     public String getUname() {
         return uname;
     }
- 
+
     public void setUname(String uname) {
         this.uname = uname;
     }
- 
+
     public String loginProject() {
+        //  if (gestionnaireUtilisateur.getAllUtilisateurs().isEmpty()) {
+
+        // }
         utilisateur = gestionnaireUtilisateur.getUtilisateur(uname, password);
         FacesContext context = FacesContext.getCurrentInstance();
-       HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
-       
-        if (utilisateur.getId() > 0){
-        return "ListeClients.xhtml";
+        HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
+
+        if (utilisateur.getId() > 0) {
+            return "ListeClients.xhtml";
+        } else {
+            return "login.xhtml";
         }
-        else{
-        return "login.xhtml";
-        }
-        
+
     }
     private String username;
 
     public String getUsername() {
-         HttpSession session = Util.getSession();
-            
-        username = (String) session.getAttribute("username"); 
+        HttpSession session = Util.getSession();
+
+        username = (String) session.getAttribute("username");
         return username;
     }
 
     public void setUsername(String username) {
         this.username = username;
     }
-    
+
     private Utilisateur utilisateurConnecte;
 
     public Utilisateur getUtilisateurConnecte() {
-         HttpSession session = Util.getSession();
-            
+        HttpSession session = Util.getSession();
+
         utilisateurConnecte = (Utilisateur) session.getAttribute("Utilisateur");
         return utilisateurConnecte;
     }
@@ -104,41 +105,43 @@ public class LoginBean implements Serializable {
     public void setUtilisateurConnecte(Utilisateur utilisateurConnecte) {
         this.utilisateurConnecte = utilisateurConnecte;
     }
-    
-    
-    
-        public String login() {
+
+    public String login() {
+        //       gestionnaireUtilisateur.creerUtilisateursDeTest();
+        //if (gestionnaireUtilisateur.getAllUtilisateurs().isEmpty()) {
+        //    gestionnaireUtilisateur.creerUtilisateursDeTest();
+      //  }
+
         boolean result = gestionnaireUtilisateur.login(uname, password);
-      
+
         if (result) {
-  Utilisateur u = gestionnaireUtilisateur.getUtilisateur(uname, password);
+            Utilisateur u = gestionnaireUtilisateur.getUtilisateur(uname, password);
             // get Http Session and store username
             HttpSession session = Util.getSession();
-            session.setAttribute("username", uname);     
+            session.setAttribute("username", uname);
             session.setAttribute("Utilisateur", u);
-            return "faces/ListeClients.xhtml";
+            return "ListeClients.xhtml";
         } else {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN,
                     "Invalid Login!",
                     "Please Try Again!"));
-            
-             // invalidate session, and redirect to other pages
-             //message = "Invalid Login. Please Try Again!";
+
+            // invalidate session, and redirect to other pages
+            //message = "Invalid Login. Please Try Again!";
             return "login";
         }
     }
- 
+
     public String logout() {
-      HttpSession session = Util.getSession();
-      session.invalidate();
-      return "login";
-   }
-    
+        HttpSession session = Util.getSession();
+        session.invalidate();
+        return "login";
+    }
+
     /**
      * Creates a new instance of LoginBean
      */
     public LoginBean() {
     }
-    
-    
+
 }

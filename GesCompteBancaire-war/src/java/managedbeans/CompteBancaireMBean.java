@@ -13,8 +13,11 @@ import entity.TypeUtilisateur;
 import entity.Utilisateur;
 import java.io.Serializable;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.annotation.Resource;
 import javax.ejb.EJB;
+import javax.ejb.TransactionManagement;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
@@ -26,6 +29,7 @@ import javax.jms.JMSConnectionFactory;
 import javax.jms.JMSContext;
 import javax.jms.Queue;
 import javax.servlet.http.HttpSession;
+import javax.transaction.RollbackException;
 import services.Util;
 import session.GestionnaireDeClient;
 import session.GestionnaireDeCompteBancaire;
@@ -57,7 +61,16 @@ public class CompteBancaireMBean implements Serializable {
     private int quantiteCompteBancaire;
 
     public int getQuantiteCompteBancaire() {
-        return (gestionnaireDeCompteBancaire.getAllComptes()).size();
+
+        HttpSession session = Util.getSession();
+        Utilisateur u = (Utilisateur) session.getAttribute("Utilisateur");
+        if (u.getTypeUtilisateur() == TypeUtilisateur.CLIENT) {
+            return gestionnaireDeCompteBancaire.getAllComptes(u.getClient().getId()).size();
+        } else {
+            return gestionnaireDeCompteBancaire.getAllComptes().size();
+        }
+
+        //  return (gestionnaireDeCompteBancaire.getAllComptes()).size();
     }
 
     private final TransactionBancaire transaction;
@@ -119,7 +132,7 @@ public class CompteBancaireMBean implements Serializable {
 
     public List<CompteBancaire> getCompteBancaires() {
         //gestionnaireDeCompteBancaire.creerComptesTest();
-        
+
         HttpSession session = Util.getSession();
         Utilisateur u = (Utilisateur) session.getAttribute("Utilisateur");
         if (u.getTypeUtilisateur() == TypeUtilisateur.CLIENT) {
@@ -127,8 +140,7 @@ public class CompteBancaireMBean implements Serializable {
         } else {
             return gestionnaireDeCompteBancaire.getAllComptes();
         }
-        
-        
+
     }
 
     public List<CompteBancaire> getCompteBancaires(Long clientId) {
@@ -200,6 +212,7 @@ public class CompteBancaireMBean implements Serializable {
     }
 
     public String addCompte() {
+        gestionnaireDeCompteBancaire.getCompteBancaireByNumCompte(compteBancaire.getNumeroCompte());
         compteBancaire.setClient(client);
         compteBancaire.setTypeCompte(typeCompte);
         gestionnaireDeCompteBancaire.creerCompteBancaire(compteBancaire);
@@ -237,18 +250,21 @@ public class CompteBancaireMBean implements Serializable {
         transaction.setComptebancaire(compteBancaire);
         transaction.setClient(client);
         transaction.setDescription("Retrait");
-        gestionnaireTransaction.creerTransactionBancaire(transaction);
-        int retrait = 0;
-        retrait = gestionnaireDeCompteBancaire.retrait(compteBancaire.getId(), transaction.getMontant());
-
-        transaction1.setComptebancaire(compteBancaireVire);
-        transaction1.setClient(client);
-        transaction1.setDescription("Dépot");
-        transaction1.setDateTransaction(transaction.getDateTransaction());
+//             gestionnaireTransaction.creerTransactionBancaire(transaction);
+//        //     int retrait = 0;
+//        //     retrait = gestionnaireDeCompteBancaire.retrait(compteBancaire.getId(), transaction.getMontant());
+//           transaction1.setComptebancaire(compteBancaireVire);
+//          transaction1.setClient(client);
+//          transaction1.setDescription("Dépot");
+//          transaction1.setDateTransaction(transaction.getDateTransaction());
         transaction1.setMontant(transaction.getMontant());
-        gestionnaireTransaction.creerTransactionBancaire(transaction1);
-        gestionnaireDeCompteBancaire.depot(compteBancaireVire.getId(), transaction1.getMontant());
-
+//        gestionnaireTransaction.creerTransactionBancaire(transaction1);
+//        // gestionnaireDeCompteBancaire.depot(compteBancaireVire.getId(), transaction1.getMontant());
+        try {
+            gestionnaireDeCompteBancaire.virementCompteACompte(compteBancaire.getId(), compteBancaireVire.getId(), transaction.getMontant());
+        } catch (RollbackException ex) {
+            Logger.getLogger(CompteBancaireMBean.class.getName()).log(Level.SEVERE, null, ex);
+        }
         return "ListeCompteBancaires.xhtml";
     }
 

@@ -60,10 +60,10 @@
                             <h:outputLabel value="Montant:" for="montant" />
                             <h:inputText id="montant" class="form-control" value="#{compteBancairMBean.transaction.montant}" title="Montant" />
 
-                            <h:outputLabel value="DateTransaction:" for="dateTransaction" />
+<!--                            <h:outputLabel value="DateTransaction:" for="dateTransaction" />
                             <h:inputText id="dateTransaction" class="form-control" value="#{compteBancairMBean.transaction.dateTransaction}" title="DateTransaction" >
                                 <f:convertDateTime pattern="MM/dd/yyyy" />
-                            </h:inputText>
+                            </h:inputText>-->
                             <h:commandButton class="btn btn-primary" value="Virement" id="virement" action="#{compteBancairMBean.sauvegarderVirement()}"/>
 
                         </h:panelGrid>

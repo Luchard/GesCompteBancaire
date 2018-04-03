@@ -6,26 +6,26 @@
       xmlns:h="http://java.sun.com/jsf/html">
 
     <h:head>
-        <link href="../resources/vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet"></link>
+        <link href="C:\Users\luchi\Documents\tpJava\GesCompteBancaire\GesCompteBancaire-war\web\resources\vendor\datatables\dataTables.bootstrap4.css" rel="stylesheet"></link>
 
-        <link href="../resources/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet"/>
+        <link href="${facesContext.externalContext.requestContextPath}/resources/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet"/>
 
-        <link href="../resources/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+        <link href="${facesContext.externalContext.requestContextPath}/resources/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
 
-        <link href="../resources/css/sb-admin.css" rel="stylesheet"></link>
+        <link href="${facesContext.externalContext.requestContextPath}/resources/css/sb-admin.css" rel="stylesheet"></link>
     </h:head>
 
     <h:body class="fixed-nav sticky-footer bg-dark" id="page-top">
         
          <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
-    <a class="navbar-brand" href="index.xhtml">LuluBank</a>
+    <a class="navbar-brand" href="${facesContext.externalContext.requestContextPath}/faces/index.xhtml">LuluBank</a>
     <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarResponsive">
       <ul class="navbar-nav navbar-sidenav" id="exampleAccordion">
         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Dashboard">
-          <a class="nav-link" href="index.xhtml">
+          <a class="nav-link" href="${facesContext.externalContext.requestContextPath}/faces/index.xhtml">
             <i class="fa fa-fw fa-dashboard"></i>
             <span class="nav-link-text">Dashboard</span>
           </a>
@@ -37,13 +37,13 @@
           </a>
           <ul class="sidenav-second-level collapse" id="collapseClients">
             <li>
-              <a href="ListeClients.xhtml"> 
+              <a href="${facesContext.externalContext.requestContextPath}/faces/ListeClients.xhtml"> 
                   <i class="fa fa-fw fa-list"></i>
             <span class="nav-link-text">Liste Clients</span>
               </a>
             </li>
             <li>
-              <a href="NouveauClient.xhtml">
+              <a href="${facesContext.externalContext.requestContextPath}/faces/NouveauClient.xhtml">
                   <i class="fa fa-fw fa-user-plus"></i>
             <span class="nav-link-text">Nouveau Client</span>
               </a>
@@ -57,13 +57,13 @@
           </a>
           <ul class="sidenav-second-level collapse" id="collapseComptes">
             <li>
-               <a href="ListeCompteBancaires.xhtml"> 
+               <a href="${facesContext.externalContext.requestContextPath}/faces/ListeCompteBancaires.xhtml"> 
                   <i class="fa fa-fw fa-list"></i>
             <span class="nav-link-text">Liste Comptes</span>
               </a>
             </li>
             <li>
-               <a href="NouveauCompte.xhtml">
+               <a href="${facesContext.externalContext.requestContextPath}/faces/NouveauCompte.xhtml">
                   <i class="fa fa-fw fa-folder-o"></i>
             <span class="nav-link-text">Nouveau Compte</span>
               </a>
@@ -79,14 +79,14 @@
           </a>
           <ul class="sidenav-second-level collapse" id="collapseComponents">
             <li>
-              <a href="ListeTransaction.xhtml">
+              <a href="${facesContext.externalContext.requestContextPath}/faces/ListeTransaction.xhtml">
                 
               <i class="fa fa-fw fa-list"></i>
             <span class="nav-link-text">  Liste Transaction</span>
               </a>
             </li>
             <li>
-              <a href="NouvelleTransaction.xhtml">
+              <a href="${facesContext.externalContext.requestContextPath}/faces/NouvelleTransaction.xhtml">
                   
               <i class="fa fa-fw fa-plus"></i>
             <span class="nav-link-text">  Nouvelle transaction</span>
@@ -94,14 +94,14 @@
             </li>
                <li>
                    
-              <a href="VirementCompte.xhtml">
+              <a href="${facesContext.externalContext.requestContextPath}/faces/VirementCompte.xhtml">
                  
                <i class="fa fa-fw fa-credit-card-alt"></i>
             <span class="nav-link-text">  Virement bancaire</span>
               </a>
             </li>
                <li>
-              <a href="FermerCompte.xhtml">
+              <a href="${facesContext.externalContext.requestContextPath}/faces/FermerCompte.xhtml">
                <i class="fa fa-fw fa-close"></i>
             <span class="nav-link-text">Fermeture compte</span>
                 
@@ -118,14 +118,14 @@
           </a>
           <ul class="sidenav-second-level collapse" id="collapseParametres">
             <li>
-              <a href="LiisteUtilisateurs.xhtml">
+              <a href="${facesContext.externalContext.requestContextPath}/faces/LiisteUtilisateurs.xhtml">
                 
               <i class="fa fa-fw fa-list"></i>
             <span class="nav-link-text">  Liste Utilisateurs</span>
               </a>
             </li>
             <li>
-              <a href="NouvelleTransaction.xhtml">
+              <a href="${facesContext.externalContext.requestContextPath}/faces/NouvelleTransaction.xhtml">
                   
               <i class="fa fa-fw fa-user-plus"></i>
             <span class="nav-link-text">  Nouvel utilisateur</span>
@@ -207,17 +207,17 @@
           
 
 
-<script src="../resources/vendor/jquery/jquery.min.js"></script>
-    <script src="../resources/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="${facesContext.externalContext.requestContextPath}/resources/vendor/jquery/jquery.min.js"></script>
+    <script src="${facesContext.externalContext.requestContextPath}/resources/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
   
-    <script src="../resources/vendor/jquery-easing/jquery.easing.min.js"></script>
+    <script src="${facesContext.externalContext.requestContextPath}/resources/vendor/jquery-easing/jquery.easing.min.js"></script>
  
     <!-- Custom scripts for all pages-->
     
     <!-- Custom scripts for this page-->
-   <script src="../resources/vendor/chart.js/Chart.min.js"></script>
-    <script src="../resources/js/sb-admin.min.js"></script>
- <script src="../resources/js/sb-admin-charts.min.js"></script>
+   <script src="${facesContext.externalContext.requestContextPath}/resources/vendor/chart.js/Chart.min.js"></script>
+    <script src="${facesContext.externalContext.requestContextPath}/resources/js/sb-admin.min.js"></script>
+ <script src="${facesContext.externalContext.requestContextPath}/resources/js/sb-admin-charts.min.js"></script>
 
     </h:body>
 

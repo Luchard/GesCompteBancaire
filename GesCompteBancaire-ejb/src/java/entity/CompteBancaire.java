@@ -31,6 +31,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "CompteBancaire.findAll", query = "SELECT c FROM CompteBancaire c"),
     @NamedQuery(name = "CompteBancaire.findByCompteId", query = "SELECT c FROM CompteBancaire c WHERE c.id = :compteBancaireId"),
+    @NamedQuery(name = "CompteBancaire.findByNumeroCompte", query = "SELECT c FROM CompteBancaire c WHERE c.numeroCompte = :numeroCompteBancaire"),
 @NamedQuery(name = "CompteBancaire.findCompteByClientId", query = "SELECT c FROM CompteBancaire c WHERE c.client.id = :clientId")
 })
 public class CompteBancaire implements Serializable {
@@ -47,10 +48,19 @@ public class CompteBancaire implements Serializable {
     private TypeCompte typeCompte;
     @OneToMany(mappedBy = "comptebancaire")
     private List<TransactionBancaire> transactions;
-
+    private String numeroCompte;
+    
     public CompteBancaire() {
         transactions = new ArrayList<>();
         
+    }
+
+    public String getNumeroCompte() {
+        return numeroCompte;
+    }
+
+    public void setNumeroCompte(String numeroCompte) {
+        this.numeroCompte = numeroCompte;
     }
 
     public TypeCompte getTypeCompte() {
@@ -64,8 +74,11 @@ public class CompteBancaire implements Serializable {
     
     public CompteBancaire( int solde) {
         this();
+        TypeCompte t = new TypeCompte();
+       
        this.typeCompte = new TypeCompte();
-        this.solde = solde;
+     
+       this.solde = solde;
     }
 
     public Client getClient() {
