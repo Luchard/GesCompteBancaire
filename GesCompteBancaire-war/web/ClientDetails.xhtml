@@ -24,29 +24,30 @@
 
 
             <h:form>
+                <p:panel id="panel">
                 <h1><h:outputText value="Details Du client"/></h1>
-                <p:panelGrid columns="2">
-                    <p:outputLabel value="Nom:" for="nom" />
-                    <p:inputText id="nom" value="#{clientDetailsMBean.details.nom}" class="form-control" title="Nom" />
-                    <p:outputLabel value="Prenom:" for="prenom" />
-                    <p:inputText id="prenom" value="#{clientDetailsMBean.details.prenom}" class="form-control" title="Prenom" />
-                    <p:outputLabel value="Ville:" for="ville" />
-                    <p:inputText id="ville" value="#{clientDetailsMBean.details.addresse.ville}" class="form-control" title="Ville" />
-                    <p:outputLabel value="Rue" for="rue" />
-                    <p:inputText id="rue" value="#{clientDetailsMBean.details.addresse.rue}" class="form-control" title="Rue" />
-                    <p:outputLabel value="No:" for="no" />
-                    <p:inputText id="no" value="#{clientDetailsMBean.details.addresse.numero}" class="form-control" title="No" />
-                    <p:outputLabel value="Phone:" for="phone" />
-                    <p:inputText id="phone" value="#{clientDetailsMBean.details.phone}" class="form-control" title="Phone" />
-                    <p:outputLabel value="Email:" for="email" />
-                    <p:inputText id="email" value="#{clientDetailsMBean.details.email}" class="form-control" title="Email" />
+                <h:panelGrid columns="2">
+                    <h:outputLabel value="Nom:" for="nom" />
+                    <h:inputText id="nom" value="#{clientDetailsMBean.details.nom}" required="true" class="form-control" title="Nom" />
+                    <h:outputLabel value="Prenom:" for="prenom" />
+                    <h:inputText id="prenom" value="#{clientDetailsMBean.details.prenom}" required="true" class="form-control" title="Prenom" />
+                    <h:outputLabel value="Ville:" for="ville" />
+                    <h:inputText id="ville" value="#{clientDetailsMBean.details.addresse.ville}" required="true" class="form-control" title="Ville" />
+                    <h:outputLabel value="Rue" for="rue" />
+                    <h:inputText id="rue" value="#{clientDetailsMBean.details.addresse.rue}" required="true" class="form-control" title="Rue" />
+                    <h:outputLabel value="No:" for="no" />
+                    <h:inputText id="no" value="#{clientDetailsMBean.details.addresse.numero}" required="true" class="form-control" title="No" />
+                    <h:outputLabel value="Phone:" for="phone" />
+                    <h:inputText id="phone" value="#{clientDetailsMBean.details.phone}" class="form-control" title="Phone" />
+                    <h:outputLabel value="Email:" for="email" />
+                    <h:inputText id="email" value="#{clientDetailsMBean.details.email}" required="true" class="form-control" title="Email" />
                    
                   
                  
-                </p:panelGrid>
+                </h:panelGrid>
                    
-                  <p:commandButton class="btn btn-primary" id="update" value="Modifier" action="#{clientDetailsMBean.update}"/>
-                
+                  <h:commandButton class="btn btn-primary" id="update" value="Modifier" action="#{clientDetailsMBean.update}"/>
+                </p:panel>
             </h:form>
         </f:view>
                 </f:view>

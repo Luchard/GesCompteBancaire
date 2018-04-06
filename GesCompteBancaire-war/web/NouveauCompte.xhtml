@@ -1,10 +1,10 @@
 <html xmlns="http://www.w3.org/1999/xhtml" 
       xmlns:ui="http://java.sun.com/jsf/facelets"
-    xmlns:h="http://java.sun.com/jsf/html"
-       xmlns:f="http://xmlns.jcp.org/jsf/core"
-    xmlns:p="http://primefaces.org/ui" >
-    
-    
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui" >
+
+
     <h:head>
         <link href="../resources/vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet"></link>
 
@@ -15,56 +15,61 @@
         <link href="../resources/css/sb-admin.css" rel="stylesheet"></link>
         <title>Nouveau Compte</title>
     </h:head>
-   
-     
-    
+
+
+
     <h:body>
         <ui:composition template="./template.xhtml">
- 
+
             <ui:define name="content">
-                 <ol class="breadcrumb">
-        <li class="breadcrumb-item">
-          <a href="index.html">Dashboard</a>
-        </li>
-        <li class="breadcrumb-item active">Nouveau Compte </li>
-  </ol>
-                    <f:view>
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        <a href="index.xhtml">Dashboard</a>
+                    </li>
+                    <li class="breadcrumb-item active">Nouveau Compte </li>
+                </ol>
+                <f:view>
 
-
-            <h:form>
-                <h1><h:outputText value="Create/Edit"/></h1>
-                <h:panelGrid columns="2">
-                  
-                   <h:outputLabel value="Client:"  />
                    
+                    <h:outputText rendered="#{!loginBean.autorisation}" value="Vous n'êtes pas autorisé à creer un nouveau compte. Veuillez contacter la banque" />
                     
-                    <h:selectOneMenu id="client" value="#{compteBancairMBean.client}" class="form-control" title="Client"
-                                     converter="#{compteBancairMBean.clientConverter}" >
-                        <!-- TODO: update below reference to list of available items-->
-                        <f:selectItems value="#{clientMBean.clients}"
-                                       var="item" itemLabel="#{item.nom} #{item.prenom}"  itemValue="#{item}" />
-                    </h:selectOneMenu>
-                    
-                     <h:outputLabel value="Type de Compte:" />
-                    
-                     <h:selectOneMenu id="typeCompte" value="#{compteBancairMBean.typeCompte}" class="form-control" title="Type de Compte"
-                                      converter="#{compteBancairMBean.typeCompteConverter}" >
-                        <!-- TODO: update below reference to list of available items-->
-                        <f:selectItems value="#{compteBancairMBean.typeComptes}"
-                                       var="item" itemLabel="#{item.nom}"  itemValue="#{item}" />
-                    </h:selectOneMenu>
-                    
-                     <p:outputLabel value="Numéro Compte Bancaire"/>
-                     <p:inputText id="numerocompte" class="form-control" title="Numéro compte" value="#{compteBancairMBean.compteBancaire.numeroCompte}"/>
-                    
-                    <p:outputLabel value="Solde:" for="solde" />
-                    <p:inputText id="solde" value="#{compteBancairMBean.compteBancaire.solde}" class="form-control" title="Solde" />
-                    <p:commandButton id="ajouter" ajax="false" value="Sauvegarder" class="btn btn-primary"  action="#{compteBancairMBean.addCompte}" actionListener="#{compteBancairMBean.addCompte}"/>
-                </h:panelGrid>
-            </h:form>
-        </f:view>
+                    <h:form rendered="#{loginBean.autorisation}">
+                         <p:panel id="panel">
+                        <h1><h:outputText value="Create/Edit"/></h1>
+                        <h:panelGrid columns="2">
+
+                            <h:outputLabel value="Client:"  />
+
+
+                            <h:selectOneMenu id="client" value="#{compteBancairMBean.client}" class="form-control" title="Client"
+                                             converter="#{compteBancairMBean.clientConverter}" >
+                                <!-- TODO: update below reference to list of available items-->
+                                <f:selectItems value="#{clientMBean.clients}"
+                                               var="item" itemLabel="#{item.nom} #{item.prenom}"  itemValue="#{item}" />
+                            </h:selectOneMenu>
+
+                            <h:outputLabel value="Type de Compte:" />
+
+                            <h:selectOneMenu id="typeCompte" value="#{compteBancairMBean.typeCompte}" class="form-control" title="Type de Compte"
+                                             converter="#{compteBancairMBean.typeCompteConverter}" >
+                                <!-- TODO: update below reference to list of available items-->
+                                <f:selectItems value="#{compteBancairMBean.typeComptes}"
+                                               var="item" itemLabel="#{item.nom}"  itemValue="#{item}" />
+                            </h:selectOneMenu>
+
+                            <h:outputLabel value="Numéro Compte Bancaire"/>
+                            <h:inputText  id="numerocompte" required="true" class="form-control" title="Numéro compte" value="#{compteBancairMBean.compteBancaire.numeroCompte}"/>
+
+                            <h:outputLabel value="Solde:" for="solde" />
+                            <h:inputText id="solde" required="true" value="#{compteBancairMBean.compteBancaire.solde}" class="form-control" title="Solde" />
+                            <h:commandButton id="ajouter"  value="Sauvegarder" class="btn btn-primary"  action="#{compteBancairMBean.addCompte}" actionListener="#{compteBancairMBean.addCompte}"/>
+                            <h:messages style = "color:red"/>
+                        </h:panelGrid>
+                    </p:panel>
+                    </h:form>
+                </f:view>
             </ui:define>
- 
+
         </ui:composition>
     </h:body>
 </html>

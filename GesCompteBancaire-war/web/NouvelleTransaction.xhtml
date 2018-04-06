@@ -16,7 +16,7 @@
             <ui:define name="content">
                  <ol class="breadcrumb">
         <li class="breadcrumb-item">
-          <a href="index.html">Dashboard</a>
+          <a href="index.xhtml">Dashboard</a>
         </li>
         <li class="breadcrumb-item active">Nouvelle Transaction </li>
   </ol>
@@ -24,16 +24,17 @@
 
 
             <h:form>
+                <p:panel id="panel">
                 <h1><h:outputText value="Nouvelle Transaction"/></h1>
                 <h:panelGrid columns="2">
                     <h:outputLabel value="Montant:" for="montant" />
-                    <h:inputText id="montant" value="#{compteBancairMBean.transaction.montant}" title="Montant" class="form-control" />
+                    <h:inputText id="montant" required="true" value="#{compteBancairMBean.transaction.montant}" title="Montant" class="form-control" />
                     <h:outputLabel value="Compte bancaire:" for="comptebancaire" />
                     <h:selectOneMenu id="comptebancaire" value="#{compteBancairMBean.compteBancaire}" class="form-control"  converter="#{compteBancairMBean.compteConverter}" title="Comptebancaire" >
                        
                         <f:selectItems value="#{compteBancairMBean.compteBancaires}"  
                        var="item"   
-                       itemLabel="#{item.client.nom} #{item.client.prenom} #{item.id}" itemValue="#{item}"/>
+                       itemLabel="#{item.numeroCompte}" itemValue="#{item}"/>
                     </h:selectOneMenu>
                     <h:outputLabel value="Client:" for="client" />
                     
@@ -45,13 +46,13 @@
                                        var="item" itemLabel="#{item.nom} #{item.prenom}" itemValue="#{item}" />
                     </h:selectOneMenu>
                     
-                    <h:outputLabel value="Date Transaction:" for="dateTransaction" />
-                    <h:inputText id="dateTransaction" class="form-control"  value="#{compteBancairMBean.transaction.dateTransaction}" title="DateTransaction" >
-                        <f:convertDateTime pattern="MM/dd/yyyy" />
-                    </h:inputText>
+
                     <h:commandButton class="btn btn-primary" value="Retrait" id="retrait" action="#{compteBancairMBean.sauvegarderRetraitTransaction()}"/>
                     <h:commandButton class="btn btn-primary" value="Depot" id="depot" action="#{compteBancairMBean.sauvegarderTransaction()}"/>
+                    <h:outputText rendered="#{compteBancairMBean.compteEpargne}" value="Vous ne pouvez pas retiré de l'argent sur un compte d'épargne" />
+                    <h:messages style = "color:red"/>
                 </h:panelGrid>
+                </p:panel>
             </h:form>
         </f:view>
             </ui:define>

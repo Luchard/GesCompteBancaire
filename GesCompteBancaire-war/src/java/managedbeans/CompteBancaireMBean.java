@@ -12,6 +12,10 @@ import entity.TypeCompte;
 import entity.TypeUtilisateur;
 import entity.Utilisateur;
 import java.io.Serializable;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -80,9 +84,46 @@ public class CompteBancaireMBean implements Serializable {
 
     private CompteBancaire compteBancaire = new CompteBancaire();
     private CompteBancaire compteBancaireVire = new CompteBancaire();
+    private CompteBancaire compteBancaireTransferer = new CompteBancaire();
 
     private Client client;
     private TypeCompte typeCompte;
+    private boolean sansMontant = true;
+    private boolean compteEpargne = false;
+    private float montantInteret = 0.0F;
+    private Long idCompteBancaire;
+
+    public Long getIdCompteBancaire() {
+        return idCompteBancaire;
+    }
+
+    public void setIdCompteBancaire(Long idCompteBancaire) {
+        this.idCompteBancaire = idCompteBancaire;
+    }
+
+    public float getMontantInteret() {
+        return montantInteret;
+    }
+
+    public void setMontantInteret(float montantInteret) {
+        this.montantInteret = montantInteret;
+    }
+
+    public boolean isCompteEpargne() {
+        return compteEpargne;
+    }
+
+    public void setCompteEpargne(boolean compteEpargne) {
+        this.compteEpargne = compteEpargne;
+    }
+
+    public boolean isSansMontant() {
+        return sansMontant;
+    }
+
+    public void setSansMontant(boolean sansMontant) {
+        this.sansMontant = sansMontant;
+    }
 
     public TypeCompte getTypeCompte() {
         return typeCompte;
@@ -90,6 +131,14 @@ public class CompteBancaireMBean implements Serializable {
 
     public void setTypeCompte(TypeCompte typeCompte) {
         this.typeCompte = typeCompte;
+    }
+
+    public CompteBancaire getCompteBancaireTransferer() {
+        return compteBancaireTransferer;
+    }
+
+    public void setCompteBancaireTransferer(CompteBancaire compteBancaireTransferer) {
+        this.compteBancaireTransferer = compteBancaireTransferer;
     }
 
     public CompteBancaire getCompteBancaire() {
@@ -145,6 +194,10 @@ public class CompteBancaireMBean implements Serializable {
 
     public List<CompteBancaire> getCompteBancaires(Long clientId) {
         return gestionnaireDeCompteBancaire.getAllComptes(clientId);
+    }
+
+    public List<CompteBancaire> getCompteBancairesClients(Long clientId, Long compteBancaireId) {
+        return gestionnaireDeCompteBancaire.getAllComptes(clientId, compteBancaireId);
     }
     private final Converter clientConverter = new Converter() {
 
@@ -212,7 +265,7 @@ public class CompteBancaireMBean implements Serializable {
     }
 
     public String addCompte() {
-        gestionnaireDeCompteBancaire.getCompteBancaireByNumCompte(compteBancaire.getNumeroCompte());
+        //     gestionnaireDeCompteBancaire.getCompteBancaireByNumCompte(compteBancaire.getNumeroCompte());
         compteBancaire.setClient(client);
         compteBancaire.setTypeCompte(typeCompte);
         gestionnaireDeCompteBancaire.creerCompteBancaire(compteBancaire);
@@ -228,22 +281,19 @@ public class CompteBancaireMBean implements Serializable {
     }
 
     public String sauvegarderTransaction() {
-        transaction.setComptebancaire(compteBancaire);
-        transaction.setClient(client);
-        transaction.setDescription("Dépot");
-        gestionnaireTransaction.creerTransactionBancaire(transaction);
         gestionnaireDeCompteBancaire.depot(compteBancaire.getId(), transaction.getMontant());
         return "ListeCompteBancaires.xhtml";
     }
 
-    public String sauvegarderRetraitTransaction() {
-        transaction.setComptebancaire(compteBancaire);
-        transaction.setClient(client);
-        transaction.setDescription("Retrait");
-        gestionnaireTransaction.creerTransactionBancaire(transaction);
-        int retrait = 0;
-        retrait = gestionnaireDeCompteBancaire.retrait(compteBancaire.getId(), transaction.getMontant());
-        return "ListeCompteBancaires.xhtml";
+    public void sauvegarderRetraitTransaction() {
+        if ("Compte Epargne".equals(compteBancaire.getTypeCompte().getNom())) {
+            compteEpargne = true;
+        } else {
+
+            int retrait = 0;
+            retrait = gestionnaireDeCompteBancaire.retrait(compteBancaire.getId(), transaction.getMontant());
+            //  return "ListeCompteBancaires.xhtml";
+        }
     }
 
     public String sauvegarderVirement() {
@@ -272,9 +322,64 @@ public class CompteBancaireMBean implements Serializable {
         return transaction;
     }
 
-    public String fermerCompte() {
-        gestionnaireDeCompteBancaire.fermerCompte(compteBancaire.getId());
-        return "ListeClients.xhtml";
+    public void fermerCompte() {
+        if (compteBancaire.getSolde() > 0) {
+            sansMontant = false;
+        } else {
+            gestionnaireDeCompteBancaire.fermerCompte(compteBancaire.getId());
+            sansMontant = true;
+        }     // return "ListeClients.xhtml";
+
+    }
+
+    public String transfererMontant() {
+        try {
+
+            DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
+
+            Date today = Calendar.getInstance().getTime();
+            String dateToday = df.format(today);
+            String dateOuvertureCompte = df.format(compteBancaire.getDateOuverture());
+            int nbreMois = 0;
+            try {
+                nbreMois = Util.nbOfMonthsBetweenTwoDates(dateOuvertureCompte, dateToday);
+            } catch (Exception ex) {
+                Logger.getLogger(CompteBancaireMBean.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            montantInteret = (float) (compteBancaire.getTypeCompte().getInteret() * (float) compteBancaire.getSolde() * nbreMois) / 100;
+
+            
+            gestionnaireDeCompteBancaire.virementCompteACompte(compteBancaire.getId(), compteBancaireTransferer.getId(), compteBancaire.getSolde());
+            gestionnaireDeCompteBancaire.depot(compteBancaireTransferer.getId(), (int) montantInteret);
+            gestionnaireDeCompteBancaire.fermerCompte(compteBancaire.getId());
+
+        } catch (RollbackException ex) {
+            Logger.getLogger(CompteBancaireMBean.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return "ListeCompteBancaires.xhtml";
+    }
+
+    public String getmontantInteret(Long compteBancaireId) {
+
+        return "InteretCompte?idCompteBancaire=" + compteBancaireId;
+    }
+
+    public void loadMontant() {
+        CompteBancaire cbancaire;
+        cbancaire = gestionnaireDeCompteBancaire.getCompteBancaire(idCompteBancaire);
+
+        DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
+
+        Date today = Calendar.getInstance().getTime();
+        String dateToday = df.format(today);
+        String dateOuvertureCompte = df.format(cbancaire.getDateOuverture());
+        int nbreMois = 0;
+        try {
+            nbreMois = Util.nbOfMonthsBetweenTwoDates(dateOuvertureCompte, dateToday);
+        } catch (Exception ex) {
+            Logger.getLogger(CompteBancaireMBean.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        montantInteret = (float) (cbancaire.getTypeCompte().getInteret() * (float) cbancaire.getSolde() * nbreMois) / 100;
     }
 
     private void sendJMSMessageToLoggingMessages(String messageData) {

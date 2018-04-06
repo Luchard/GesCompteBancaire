@@ -73,6 +73,13 @@ public class GestionnaireDeCompteBancaire {
         return query.getResultList();
     }
 
+    public List<CompteBancaire> getAllComptes(Long id_client, Long id_compte) {
+        Query query = em.createNamedQuery("CompteBancaire.findCompteByClientIdAndCompteId");
+        query.setParameter("clientId", id_client);
+        query.setParameter("compteBancaireId", id_compte);
+        return query.getResultList();
+    }
+
     public void creerComptesTest() {
         creerCompteBancaire(new CompteBancaire(150000));
         creerCompteBancaire(new CompteBancaire(950000));
@@ -131,6 +138,26 @@ public class GestionnaireDeCompteBancaire {
 
     }
 
+    public long getNombreDeComptes() {
+        Query query = em.createNamedQuery("CompteBancaire.getNombre");
+        return (long) query.getSingleResult();
+    }
+
+    public List<CompteBancaire> getComptesTriesParNom(int start, int nb, String order) {
+        String orderValue = "";
+        if (order.equals("ASCENDING")) {
+            orderValue = "ASC";
+        } else {
+            orderValue = "DESC";
+        }
+        String r = "select c from CompteBancaire c order by c.client.nom"
+                + orderValue;
+        Query query = em.createQuery(r);
+        query.setFirstResult(start);
+        query.setMaxResults(nb);
+        return query.getResultList();
+    }
+
     public void virementCompteACompte(Long id1, Long id2, int montant) throws RollbackException {
         try {
             userTx.begin();
@@ -171,28 +198,64 @@ public class GestionnaireDeCompteBancaire {
     }
 
     public void fermerCompte(Long idCompteBancaire) {
-        CompteBancaire c1 = em.find(CompteBancaire.class, idCompteBancaire);
-        em.remove(c1);
+        try {
+            userTx.begin();
+            CompteBancaire c1 = em.find(CompteBancaire.class, idCompteBancaire);
+            em.remove(c1);
+            try {
+                userTx.commit();
+            } catch (RollbackException | HeuristicMixedException | HeuristicRollbackException | SecurityException | IllegalStateException ex) {
+                Logger.getLogger(GestionnaireDeCompteBancaire.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } catch (NotSupportedException | SystemException ex) {
+            Logger.getLogger(GestionnaireDeCompteBancaire.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     public TransactionBancaire depot(Long idCompteBancaire, int montant) {
-        CompteBancaire c1 = em.find(CompteBancaire.class, idCompteBancaire);
         TransactionBancaire transaction = new TransactionBancaire();
-        transaction.setComptebancaire(c1);
-        transaction.setClient(c1.getClient());
-        transaction.setDescription("Dépot");
-        c1.deposer(montant);
+        try {
+            userTx.begin();
+            CompteBancaire c1 = em.find(CompteBancaire.class, idCompteBancaire);
+            Date date = new Date();
+            transaction.setComptebancaire(c1);
+            transaction.setDateTransaction(date);
+            transaction.setClient(c1.getClient());
+            transaction.setDescription("Dépot");
+            c1.deposer(montant);
+            try {
+                userTx.commit();
+            } catch (RollbackException | HeuristicMixedException | HeuristicRollbackException | SecurityException | IllegalStateException ex) {
+                Logger.getLogger(GestionnaireDeCompteBancaire.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } catch (NotSupportedException | SystemException ex) {
+            Logger.getLogger(GestionnaireDeCompteBancaire.class.getName()).log(Level.SEVERE, null, ex);
+        }
         return (transaction);
     }
 
     public int retrait(Long idCompteBancaire, int montant) {
-        CompteBancaire c1 = em.find(CompteBancaire.class, idCompteBancaire);
-        TransactionBancaire transaction = new TransactionBancaire();
-        transaction.setComptebancaire(c1);
-        transaction.setClient(c1.getClient());
-        transaction.setDescription("Retrait");
-        em.persist(transaction);
-        return c1.retirer(montant);
-
+        int montantRetire = 0;
+        try {
+            userTx.begin();
+            CompteBancaire c1 = em.find(CompteBancaire.class, idCompteBancaire);
+            TransactionBancaire transaction = new TransactionBancaire();
+            Date date = new Date();
+            transaction.setComptebancaire(c1);
+            transaction.setMontant(montant);
+            transaction.setDateTransaction(date);
+            transaction.setClient(c1.getClient());
+            transaction.setDescription("Retrait");
+            em.persist(transaction);
+            montantRetire = c1.retirer(montant);
+            try {
+                userTx.commit();
+            } catch (RollbackException | HeuristicMixedException | HeuristicRollbackException | SecurityException | IllegalStateException ex) {
+                Logger.getLogger(GestionnaireDeCompteBancaire.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } catch (NotSupportedException | SystemException ex) {
+            Logger.getLogger(GestionnaireDeCompteBancaire.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return montantRetire;
     }
 }

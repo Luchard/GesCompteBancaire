@@ -6,7 +6,11 @@
 package session;
 
 import entity.Client;
+import entity.CompteBancaire;
 import entity.TypeCompte;
+import entity.Utilisateur;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.ejb.LocalBean;
@@ -29,14 +33,27 @@ public class GestionnaireTypeCompte {
         em.persist(object);
     }
 
-     public List<TypeCompte> getAllTypeCompte() {
-    
-     
-      Query query = em.createNamedQuery("TypeCompte.findAll");  
+    public List<TypeCompte> getAllTypeCompte() {
+
+        Query query = em.createNamedQuery("TypeCompte.findAll");
         return query.getResultList();
     }
-    
-      public TypeCompte getTypeCompte(Long idTypeCompte) {  
-        return em.find(TypeCompte.class, idTypeCompte);  
-}
+
+    public TypeCompte getTypeCompte(Long idTypeCompte) {
+        return em.find(TypeCompte.class, idTypeCompte);
+    }
+
+    public void creerTypeCompteDeTest() {
+       // creerTypeCompte("Compte Courant");
+        TypeCompte tc = new TypeCompte("Compte Epargne");
+        tc.setInteret(1.5F);
+        em.persist(tc);
+        creerTypeCompte("Compte Courant");
+        
+    }
+
+    public void creerTypeCompte(String nom) {
+        TypeCompte tc = new TypeCompte(nom);
+        em.persist(tc);
+    }
 }

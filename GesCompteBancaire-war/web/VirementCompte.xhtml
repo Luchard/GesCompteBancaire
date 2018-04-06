@@ -23,7 +23,7 @@
             <ui:define name="content">
                  <ol class="breadcrumb">
         <li class="breadcrumb-item">
-          <a href="index.html">Dashboard</a>
+          <a href="index.xhtml">Dashboard</a>
         </li>
         <li class="breadcrumb-item active">Virement Bancaire </li>
   </ol>
@@ -31,6 +31,7 @@
 
 
                     <h:form>
+                        <p:panel id="panel">
                         <h1><h:outputText value="Nouvelle Transaction"/></h1>
                         <h:panelGrid columns="2">
 
@@ -39,7 +40,7 @@
 
                                 <f:selectItems value="#{compteBancairMBean.compteBancaires}"  
                                                var="item"   
-                                               itemLabel="#{item.id}" itemValue="#{item}"/>
+                                               itemLabel="#{item.numeroCompte}" itemValue="#{item}"/>
                             </h:selectOneMenu>
 
                             <h:outputLabel value="Comptebancaire 2:" for="comptebancaire" />
@@ -47,7 +48,7 @@
 
                                 <f:selectItems value="#{compteBancairMBean.compteBancaires}"  
                                                var="item"   
-                                               itemLabel="#{item.id}" itemValue="#{item}"/>
+                                               itemLabel="#{item.numeroCompte}" itemValue="#{item}"/>
                             </h:selectOneMenu>
                             <h:outputLabel value="Client:" for="client" />
                             <h:selectOneMenu id="client" class="form-control" value="#{compteBancairMBean.client}" title="Client"
@@ -67,6 +68,7 @@
                             <h:commandButton class="btn btn-primary" value="Virement" id="virement" action="#{compteBancairMBean.sauvegarderVirement()}"/>
 
                         </h:panelGrid>
+                        </p:panel>
                     </h:form>
                 </f:view>
             </ui:define>

@@ -2,46 +2,63 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" 
       xmlns:ui="http://java.sun.com/jsf/facelets"
-    xmlns:h="http://java.sun.com/jsf/html"
-       xmlns:f="http://xmlns.jcp.org/jsf/core"
-    xmlns:p="http://primefaces.org/ui">
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
     <h:head>
         <title>Fermeture Compte</title>
     </h:head>
-   
-    
-    
-     <h:body>
+
+
+
+    <h:body>
         <ui:composition template="./template.xhtml">
- 
+
             <ui:define name="content">
-                 <ol class="breadcrumb">
-        <li class="breadcrumb-item">
-          <a href="index.html">Dashboard</a>
-        </li>
-        <li class="breadcrumb-item active">Fermeture Compte </li>
-  </ol>
-                  <f:view>
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        <a href="index.xhtml">Dashboard</a>
+                    </li>
+                    <li class="breadcrumb-item active">Fermeture Compte </li>
+                </ol>
+                <f:view>
 
 
-            <h:form>
-                <h1><h:outputText value="Fermeture Compte"/></h1>
-                <h:panelGrid columns="2">
-                    
-                    <h:selectOneMenu id="comptebancaire" class="form-control" value="#{compteBancairMBean.compteBancaire}" converter="#{compteBancairMBean.compteConverter}" title="Comptebancaire" >
-                       
-                        <f:selectItems value="#{compteBancairMBean.compteBancaires}"  
-                       var="item"   
-                       itemLabel="#{item.id}" itemValue="#{item}"/>
-                    </h:selectOneMenu>
-                
-                    <h:commandButton value="Fermer" class="btn btn-primary" id="ferme" action="#{compteBancairMBean.fermerCompte()}"/>
-                    
-                </h:panelGrid>
-            </h:form>
-        </f:view>
+                    <h:form>
+                        <p:panel id="panel">
+                            <h1><h:outputText value="Fermeture Compte"/></h1>
+                            <h:panelGrid columns="1">
+
+                                <h:selectOneMenu id="comptebancaire" class="form-control" value="#{compteBancairMBean.compteBancaire}" converter="#{compteBancairMBean.compteConverter}" title="Comptebancaire" >
+
+                                    <f:selectItems value="#{compteBancairMBean.compteBancaires}"  
+                                                   var="item"   
+                                                   itemLabel="#{item.numeroCompte}" itemValue="#{item}"/>
+                                </h:selectOneMenu>
+
+                                <h:commandButton value="Fermer" class="btn btn-primary" id="ferme" action="#{compteBancairMBean.fermerCompte()}"/>
+                                <h:outputText rendered="#{!compteBancairMBean.sansMontant}" value="Le solde de votre compte n'est pas 0 vous ne pouvez pas fermer ce compte" />
+                            </h:panelGrid>
+                        </p:panel>
+                        <p:panel rendered="#{!compteBancairMBean.sansMontant}">
+                             <h:outputText rendered="#{!compteBancairMBean.sansMontant}" value="Choisissez un de vos autres comptes pour transferer votre argent" />
+                            <h:panelGrid columns="2" rendered="#{!compteBancairMBean.sansMontant}">
+                               
+                                <h:outputLabel value="Autre Compte:" />
+                                <h:selectOneMenu id="comptebancaireTransferer" class="form-control" value="#{compteBancairMBean.compteBancaireTransferer}" converter="#{compteBancairMBean.compteConverter}" title="Comptebancaire" >
+
+                                    <f:selectItems value="#{compteBancairMBean.getCompteBancairesClients(compteBancairMBean.compteBancaire.client.id, compteBancairMBean.compteBancaire.id)}"  
+                                                   var="element"   
+                                                   itemLabel="#{element.numeroCompte}" itemValue="#{element}"/>
+                                </h:selectOneMenu>
+                                <h:commandButton value="Transférer" class="btn btn-primary" id="transfere" action="#{compteBancairMBean.transfererMontant()}"/>
+                            </h:panelGrid>
+                        </p:panel>
+                    </h:form>
+
+                </f:view>
             </ui:define>
- 
+
         </ui:composition>
     </h:body>
 </html>

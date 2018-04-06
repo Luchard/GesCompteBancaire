@@ -36,9 +36,18 @@ public class TypeCompte implements Serializable {
     private String nom;
     @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER, mappedBy = "typeCompte")
     private Collection<CompteBancaire> compteBancaires;
-
+private float interet;
     public Collection<CompteBancaire> getCompteBancaires() {
         return compteBancaires;
+    }
+
+    public TypeCompte() {
+
+    }
+
+    public TypeCompte(String nom) {
+        this.nom = nom;
+        this.interet = 0.0F;
     }
 
     public void setCompteBancaires(Collection<CompteBancaire> compteBancaires) {
@@ -47,6 +56,14 @@ public class TypeCompte implements Serializable {
 
     public Long getId() {
         return id;
+    }
+
+    public float getInteret() {
+        return interet;
+    }
+
+    public void setInteret(float interet) {
+        this.interet = interet;
     }
 
     public void setId(Long id) {

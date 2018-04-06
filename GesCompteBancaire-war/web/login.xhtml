@@ -53,15 +53,14 @@
                             <div class="form-group">
             <label for="exampleInputEmail1">Username</label>
        
-     <p:inputText class="form-control" id="username" value="#{loginBean.uname}"></p:inputText>
+     <h:inputText class="form-control" id="username" value="#{loginBean.uname}"/>
 			
                             </div>
             
              <div class="form-group">
             <label for="exampleInputPassword1">Password</label>
-           
-         <p:password id="password" class="form-control" value="#{loginBean.password}"
-					feedback="false"></p:password>
+            <h:inputSecret id="password" class="form-control"  value="#{loginBean.password}"/>
+        
              </div>
           <div class="form-group">
             <div class="form-check">
@@ -69,9 +68,9 @@
                 <input class="form-check-input" type="checkbox"/> Remember Password</label>
             </div>
           </div>		
-                            <p:commandButton id="loginButton" class="btn btn-primary btn-block" action="#{loginBean.login}"
+                            <h:commandButton id="loginButton" class="btn btn-primary btn-block" action="#{loginBean.login}"
 					value="Login">
-				</p:commandButton>
+				</h:commandButton>
 			
 		
 		

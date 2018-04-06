@@ -35,7 +35,9 @@
          
 
 
-                     <h:form>
+                      <h:outputText rendered="#{!loginBean.autorisation}" value="Vous n'êtes pas autorisé à regarder la liste des utilisateurs" />
+                            <h:form rendered="#{loginBean.autorisation}">
+                                <p:panel id="panel">
                          <h1><h:outputText value="Liste des utilisateurs"/></h1>
                          <p:dataTable value="#{utilisateursMBean.utilisateurs}" var="item"
                              widgetVar="utilisateurTable"
@@ -79,6 +81,7 @@
                             
                            
                          </p:dataTable>
+                                </p:panel>
                      </h:form>
 
                      

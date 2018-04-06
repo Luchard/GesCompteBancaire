@@ -8,6 +8,7 @@ package entity;
 import java.io.Serializable;
 import java.util.AbstractList;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -19,6 +20,7 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -32,7 +34,9 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "CompteBancaire.findAll", query = "SELECT c FROM CompteBancaire c"),
     @NamedQuery(name = "CompteBancaire.findByCompteId", query = "SELECT c FROM CompteBancaire c WHERE c.id = :compteBancaireId"),
     @NamedQuery(name = "CompteBancaire.findByNumeroCompte", query = "SELECT c FROM CompteBancaire c WHERE c.numeroCompte = :numeroCompteBancaire"),
-@NamedQuery(name = "CompteBancaire.findCompteByClientId", query = "SELECT c FROM CompteBancaire c WHERE c.client.id = :clientId")
+    @NamedQuery(name = "CompteBancaire.getNombre", query = "select count(c) from CompteBancaire c"), 
+    @NamedQuery(name = "CompteBancaire.findCompteByClientIdAndCompteId", query = "SELECT c FROM CompteBancaire c WHERE c.client.id = :clientId and c.id NOT IN (:compteBancaireId)"),
+    @NamedQuery(name = "CompteBancaire.findCompteByClientId", query = "SELECT c FROM CompteBancaire c WHERE c.client.id = :clientId")
 })
 public class CompteBancaire implements Serializable {
 
@@ -46,15 +50,28 @@ public class CompteBancaire implements Serializable {
     private Client client;
     @ManyToOne
     private TypeCompte typeCompte;
-    @OneToMany(mappedBy = "comptebancaire")
+    @OneToMany(mappedBy = "comptebancaire", cascade = CascadeType.ALL)
     private List<TransactionBancaire> transactions;
     private String numeroCompte;
+    @Temporal(javax.persistence.TemporalType.DATE)
+    private Date dateOuverture;
     
     public CompteBancaire() {
         transactions = new ArrayList<>();
-        
+        Date dateOuvertureCompte;
+        dateOuvertureCompte = new Date();
+        this.dateOuverture = dateOuvertureCompte;
     }
 
+    public Date getDateOuverture() {
+        return dateOuverture;
+    }
+
+    public void setDateOuverture(Date dateOuverture) {
+        this.dateOuverture = dateOuverture;
+    }
+
+    
     public String getNumeroCompte() {
         return numeroCompte;
     }

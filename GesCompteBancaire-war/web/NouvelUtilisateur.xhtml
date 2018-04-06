@@ -1,0 +1,45 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+        <f:view>
+
+
+            <h:form>
+                <h1><h:outputText value="Create/Edit"/></h1>
+                <h:panelGrid columns="2">
+                    <h:outputLabel value="StatutCompte:" for="statutCompte" />
+                    <h:inputText id="statutCompte" value="#{loginBean.utilisateur.statutCompte}" title="StatutCompte" />
+                    <h:outputLabel value="TypeUtilisateur:" for="typeUtilisateur" />
+                    <h:inputText id="typeUtilisateur" value="#{loginBean.utilisateur.typeUtilisateur}" title="TypeUtilisateur" />
+                    <h:outputLabel value="Client:" for="client" />
+                    <h:selectOneMenu id="client" value="#{loginBean.utilisateur.client}" title="Client" >
+                        <!-- TODO: update below reference to list of available items-->
+                        <f:selectItems value="#{fixme}"/>
+                    </h:selectOneMenu>
+                    <h:outputLabel value="DerniereConnexion:" for="derniereConnexion" />
+                    <h:inputText id="derniereConnexion" value="#{loginBean.utilisateur.derniereConnexion}" title="DerniereConnexion" >
+                        <f:convertDateTime pattern="MM/dd/yyyy" />
+                    </h:inputText>
+                    <h:outputLabel value="Prenom:" for="prenom" />
+                    <h:inputText id="prenom" value="#{loginBean.utilisateur.prenom}" title="Prenom" />
+                    <h:outputLabel value="Nom:" for="nom" />
+                    <h:inputText id="nom" value="#{loginBean.utilisateur.nom}" title="Nom" />
+                    <h:outputLabel value="Username:" for="username" />
+                    <h:inputText id="username" value="#{loginBean.utilisateur.username}" title="Username" />
+                    <h:outputLabel value="Password:" for="password" />
+                    <h:inputText id="password" value="#{loginBean.utilisateur.password}" title="Password" />
+                    <h:outputLabel value="Id:" for="id" />
+                    <h:inputText id="id" value="#{loginBean.utilisateur.id}" title="Id" />
+                </h:panelGrid>
+            </h:form>
+        </f:view>
+
+    </h:body>
+</html>
+

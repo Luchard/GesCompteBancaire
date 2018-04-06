@@ -21,7 +21,7 @@
             <ui:define name="content">
                  <ol class="breadcrumb">
         <li class="breadcrumb-item">
-          <a href="index.html">Dashboard</a>
+          <a href="index.xhtml">Dashboard</a>
         </li>
         <li class="breadcrumb-item active">Compte Bancaire </li>
   </ol>
@@ -29,6 +29,7 @@
 
 
             <h:form>
+                <p:panel id="panel">
                 <h1><h:outputText value="Liste des transactions"/></h1>
                 <p:dataTable value="#{transactionBancaireMBean.transactionsCompte}" var="item">
                  
@@ -67,6 +68,7 @@
                         <h:outputText value="#{item.id}"/>
                     </p:column>
                 </p:dataTable>
+                </p:panel>
             </h:form>
         </f:view>
             </ui:define>
