@@ -73,6 +73,22 @@ public class GestionnaireUtilisateur {
         u.setClient(c);
         em.persist(u);
     }
+    
+    
+    public void creerUtilisateur(Utilisateur u) {
+        Client c = new Client(u.getNom() ,u.getPrenom());
+        
+        Collection<CompteBancaire> cpts = new ArrayList<>();
+        CompteBancaire cpt = new CompteBancaire();
+        em.persist(cpt);
+        cpts.add(cpt);
+        em.persist(c);
+        cpt.setClient(c);
+        c.setCompteBancaires(cpts);
+        u.setClient(c);
+        em.persist(u);
+        
+    }
 
     public Utilisateur getUtilisateur(String username, String password) {
         Query query = em.createNamedQuery("Utilisateur.findByUsernameAndPassword");

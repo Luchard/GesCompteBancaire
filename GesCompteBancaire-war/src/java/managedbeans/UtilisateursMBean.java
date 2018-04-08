@@ -10,6 +10,8 @@ import entity.Utilisateur;
 import java.io.Serializable;
 import java.util.List;
 import javax.ejb.EJB;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
 import session.GestionnaireUtilisateur;
@@ -25,23 +27,24 @@ public class UtilisateursMBean implements Serializable {
     @EJB
     private GestionnaireUtilisateur gestionnaireUtilisateur;
 
-    
+
+
     /**
      * Creates a new instance of UtilisateursMBean
      */
     public UtilisateursMBean() {
     }
-    
-        public List<Utilisateur> getUtilisateurs() {
+
+    public List<Utilisateur> getUtilisateurs() {
         // gestionnaireDeClient.creerComptesTest();
-     
+
         return gestionnaireUtilisateur.getAllUtilisateurs();
     }
-    
-   
 
     public String showDetails(int clientId) {
         return "ClientDetails?idClient=" + clientId;
     }
     
+
+
 }

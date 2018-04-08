@@ -26,6 +26,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "TypeCompte.findAll", query = "SELECT t FROM TypeCompte t"),
+    @NamedQuery(name = "TypeCompte.findByNom", query = "SELECT t FROM TypeCompte t where t.nom = :nomCompte"),
     @NamedQuery(name = "TypeCompte.findById", query = "SELECT t FROM TypeCompte t WHERE t.id = :typeCompteId")})
 public class TypeCompte implements Serializable {
 

@@ -49,22 +49,26 @@ public class Utilisateur implements Serializable {
     private Date derniereConnexion;
 
     public Utilisateur() {
-
+        this.typeUtilisateur = TypeUtilisateur.CLIENT;
+        this.statutCompte = StatutCompte.ACTIF;
+        this.client = new Client();
     }
 
     public Utilisateur(String nom, String prenom) {
+        this();
         this.nom = nom;
         this.prenom = prenom;
-        this.typeUtilisateur = TypeUtilisateur.CLIENT;
+
     }
 
     public Utilisateur(String nom, String prenom, String username) {
+        this();
         this.nom = nom;
         this.prenom = prenom;
         this.username = username;
         this.typeUtilisateur = TypeUtilisateur.CAISSIER;
         this.password = "password";
-        this.statutCompte = StatutCompte.ACTIF;
+
     }
 
     public Utilisateur(Client client) {

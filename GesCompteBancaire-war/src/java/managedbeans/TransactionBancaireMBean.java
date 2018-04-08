@@ -41,7 +41,6 @@ public class TransactionBancaireMBean implements Serializable {
     /**
      * Creates a new instance of TransactionBancaireMBean
      */
-
     public TransactionBancaireMBean() {
     }
 
@@ -55,6 +54,17 @@ public class TransactionBancaireMBean implements Serializable {
             return gestionnaireTransaction.getAllTransactions();
         }
 
+    }
+
+    public int getQuantiteTransactions() {
+
+        HttpSession session = Util.getSession();
+        Utilisateur u = (Utilisateur) session.getAttribute("Utilisateur");
+        if (u.getTypeUtilisateur() == TypeUtilisateur.CLIENT) {
+            return gestionnaireTransaction.getAllTransactionsByClient(u.getClient().getId()).size();
+        } else {
+            return gestionnaireTransaction.getAllTransactions().size();
+        }
     }
 
     public List<TransactionBancaire> getTransactionsCompte() {

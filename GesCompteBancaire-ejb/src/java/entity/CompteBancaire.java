@@ -10,6 +10,7 @@ import java.util.AbstractList;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Random;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -23,6 +24,7 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.xml.bind.annotation.XmlRootElement;
 
+
 /**
  *
  * @author luchi
@@ -34,7 +36,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "CompteBancaire.findAll", query = "SELECT c FROM CompteBancaire c"),
     @NamedQuery(name = "CompteBancaire.findByCompteId", query = "SELECT c FROM CompteBancaire c WHERE c.id = :compteBancaireId"),
     @NamedQuery(name = "CompteBancaire.findByNumeroCompte", query = "SELECT c FROM CompteBancaire c WHERE c.numeroCompte = :numeroCompteBancaire"),
-    @NamedQuery(name = "CompteBancaire.getNombre", query = "select count(c) from CompteBancaire c"), 
+    @NamedQuery(name = "CompteBancaire.getNombre", query = "select count(c) from CompteBancaire c"),
     @NamedQuery(name = "CompteBancaire.findCompteByClientIdAndCompteId", query = "SELECT c FROM CompteBancaire c WHERE c.client.id = :clientId and c.id NOT IN (:compteBancaireId)"),
     @NamedQuery(name = "CompteBancaire.findCompteByClientId", query = "SELECT c FROM CompteBancaire c WHERE c.client.id = :clientId")
 })
@@ -44,9 +46,9 @@ public class CompteBancaire implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-   
+
     private int solde;
-    @ManyToOne 
+    @ManyToOne
     private Client client;
     @ManyToOne
     private TypeCompte typeCompte;
@@ -55,11 +57,14 @@ public class CompteBancaire implements Serializable {
     private String numeroCompte;
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date dateOuverture;
-    
+
     public CompteBancaire() {
         transactions = new ArrayList<>();
         Date dateOuvertureCompte;
         dateOuvertureCompte = new Date();
+        Random rand = new Random(); 
+        int nombreAleatoire = rand.nextInt(10000 - 0 + 1) + 0;
+        this.numeroCompte = String.valueOf(nombreAleatoire);
         this.dateOuverture = dateOuvertureCompte;
     }
 
@@ -71,7 +76,6 @@ public class CompteBancaire implements Serializable {
         this.dateOuverture = dateOuverture;
     }
 
-    
     public String getNumeroCompte() {
         return numeroCompte;
     }
@@ -88,14 +92,13 @@ public class CompteBancaire implements Serializable {
         this.typeCompte = typeCompte;
     }
 
-    
-    public CompteBancaire( int solde) {
+    public CompteBancaire(int solde) {
         this();
         TypeCompte t = new TypeCompte();
-       
-       this.typeCompte = new TypeCompte();
-     
-       this.solde = solde;
+
+        this.typeCompte = new TypeCompte();
+
+        this.solde = solde;
     }
 
     public Client getClient() {
@@ -132,22 +135,20 @@ public class CompteBancaire implements Serializable {
 
     public void deposer(int montant) {
         this.solde = this.solde + montant;
-       // TransactionBancaire tBancaire = new TransactionBancaire();
-       // FaireTransaction(tBancaire);
+        // TransactionBancaire tBancaire = new TransactionBancaire();
+        // FaireTransaction(tBancaire);
     }
 
     public int retirer(int montant) {
         if (montant <= solde) {
             solde -= montant;
-         //   TransactionBancaire tBancaire = new TransactionBancaire();
-          //  FaireTransaction(tBancaire);
+            //   TransactionBancaire tBancaire = new TransactionBancaire();
+            //  FaireTransaction(tBancaire);
             return solde;
         } else {
             return 0;
         }
     }
-
-
 
     public int getSolde() {
         return solde;

@@ -39,17 +39,24 @@ public class GestionnaireTypeCompte {
         return query.getResultList();
     }
 
+    public TypeCompte getTypeCompte(String nom) {
+
+        Query query = em.createNamedQuery("TypeCompte.findByNom");
+        query.setParameter("nomCompte", nom);
+        return (TypeCompte) query.getSingleResult();
+    }
+
     public TypeCompte getTypeCompte(Long idTypeCompte) {
         return em.find(TypeCompte.class, idTypeCompte);
     }
 
     public void creerTypeCompteDeTest() {
-       // creerTypeCompte("Compte Courant");
+        // creerTypeCompte("Compte Courant");
         TypeCompte tc = new TypeCompte("Compte Epargne");
         tc.setInteret(1.5F);
         em.persist(tc);
         creerTypeCompte("Compte Courant");
-        
+
     }
 
     public void creerTypeCompte(String nom) {

@@ -5,6 +5,7 @@
  */
 package managedbeans;
 
+import static com.sun.faces.facelets.util.Path.context;
 import entity.TypeUtilisateur;
 import services.Util;
 import entity.Utilisateur;
@@ -149,10 +150,10 @@ public class LoginBean implements Serializable {
         if (gestionnaireUtilisateur.getAllUtilisateurs().isEmpty()) {
             gestionnaireUtilisateur.creerUtilisateursDeTest();
         }
-        if(gestionnaireTypeCompte.getAllTypeCompte().isEmpty()){
-         gestionnaireTypeCompte.creerTypeCompteDeTest();
+        if (gestionnaireTypeCompte.getAllTypeCompte().isEmpty()) {
+            gestionnaireTypeCompte.creerTypeCompteDeTest();
         }
-       
+
         boolean result = gestionnaireUtilisateur.login(uname, password);
 
         if (result) {
@@ -164,14 +165,12 @@ public class LoginBean implements Serializable {
             session.setAttribute("Utilisateur", u);
             session.setAttribute("connexion", connected);
             message = "Bienvenue, vous êtes connecté en tant que " + uname + " ! ";
-            return "ListeClients.xhtml";
+            return "index.xhtml";
         } else {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN,
                     "Invalid Login!",
                     "Please Try Again!"));
 
-            // invalidate session, and redirect to other pages
-            //message = "Invalid Login. Please Try Again!";
             return "login";
         }
     }
@@ -187,6 +186,13 @@ public class LoginBean implements Serializable {
      * Creates a new instance of LoginBean
      */
     public LoginBean() {
+        this.utilisateur = new Utilisateur();
     }
 
+    public String creeUtilisateur() {
+        gestionnaireUtilisateur.creerUtilisateur(utilisateur);
+        return "login.xhtml";
+    }
+    
+      
 }
