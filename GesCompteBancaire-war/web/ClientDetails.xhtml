@@ -45,8 +45,10 @@
                   
                  
                 </h:panelGrid>
-                   
+                <h:panelGrid columns="2">
                   <h:commandButton class="btn btn-primary" id="update" value="Modifier" action="#{clientDetailsMBean.update}"/>
+                  <h:commandButton class="btn btn-primary" id="retour" value="Quitter" action="#{clientDetailsMBean.addRetour()}"/>
+                </h:panelGrid>
                 </p:panel>
             </h:form>
         </f:view>

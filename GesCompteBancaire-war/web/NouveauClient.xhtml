@@ -64,6 +64,7 @@
                                     </h:inputText>
 
                                     <h:commandButton value="Sauvegarder" action="#{nouveauClientMBean.creeClient}" class="btn btn-primary"  type="submit"/>
+                                    <h:link outcome="#{clientDetailsMBean.addRetour()}" value="Quitter" class="btn btn-primary"/>
                                     <h:messages style = "color:red"/>
                                 </h:panelGrid>
                             </p:panel>

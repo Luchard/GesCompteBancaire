@@ -49,7 +49,10 @@ private Long idClient;
     return "ListeClients.xhtml";  
   }  
   
- 
+  public String addRetour() {
+       
+        return "ListeClients.xhtml";
+    }
   public String list() {  
     System.out.println("###LIST###");  
     return "ListeClients.xhtml";  

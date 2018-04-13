@@ -35,7 +35,7 @@
                         <h1><h:outputText value="Nouvelle Transaction"/></h1>
                         <h:panelGrid columns="2">
 
-                            <h:outputLabel value="Comptebancaire 1:" for="comptebancaire" />
+                            <h:outputLabel value="Compte bancaire 1:" for="comptebancaire" />
                             <h:selectOneMenu id="comptebancaire" class="form-control" value="#{compteBancairMBean.compteBancaire}" converter="#{compteBancairMBean.compteConverter}" title="Comptebancaire" >
 
                                 <f:selectItems value="#{compteBancairMBean.compteBancaires}"  
@@ -43,7 +43,7 @@
                                                itemLabel="#{item.numeroCompte}" itemValue="#{item}"/>
                             </h:selectOneMenu>
 
-                            <h:outputLabel value="Comptebancaire 2:" for="comptebancaire" />
+                            <h:outputLabel value="Compte bancaire 2:" for="comptebancaire" />
                             <h:selectOneMenu id="comptebancairevire" class="form-control" value="#{compteBancairMBean.compteBancaireVire}" converter="#{compteBancairMBean.compteConverter}" title="Comptebancaire" >
 
                                 <f:selectItems value="#{compteBancairMBean.compteBancaires}"  
@@ -65,8 +65,11 @@
                             <h:inputText id="dateTransaction" class="form-control" value="#{compteBancairMBean.transaction.dateTransaction}" title="DateTransaction" >
                                 <f:convertDateTime pattern="MM/dd/yyyy" />
                             </h:inputText>-->
+                            
+                        </h:panelGrid>
+                        <h:panelGrid columns="2">
                             <h:commandButton class="btn btn-primary" value="Virement" id="virement" action="#{compteBancairMBean.sauvegarderVirement()}"/>
-
+                            <h:commandButton class="btn btn-primary" value="Quitter" id="quitter" action="#{compteBancairMBean.addRetour()}"/>
                         </h:panelGrid>
                         </p:panel>
                     </h:form>

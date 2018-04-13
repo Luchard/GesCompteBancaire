@@ -34,6 +34,7 @@
                   
                     <h:outputText  value="Vos intérês jusqu'à date sont : #{compteBancairMBean.montantInteret}" />
                     <h:messages style = "color:red"/>
+                    <h:commandButton class="btn btn-primary" id="retour" value="Quitter" action="#{compteBancairMBean.addRetour()}"/>
                 </h:panelGrid>
                 </p:panel>
             </h:form>

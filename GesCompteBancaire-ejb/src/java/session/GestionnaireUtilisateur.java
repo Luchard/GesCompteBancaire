@@ -14,6 +14,7 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.ejb.LocalBean;
 import javax.faces.application.FacesMessage;
@@ -31,6 +32,8 @@ import services.DBCon;
 @LocalBean
 public class GestionnaireUtilisateur {
 
+    @EJB
+    private GestionnaireTypeCompte gestionnaireTypeCompte;
     @PersistenceContext(unitName = "GesCompteBancaire-ejbPU")
     private EntityManager em;
 
@@ -61,10 +64,11 @@ public class GestionnaireUtilisateur {
 
     public void creeUtilisateur(String nom, String prenom, String login) {
         Utilisateur u = new Utilisateur(nom, prenom, login);
-        Client c = new Client(nom ,prenom);
-        
+        Client c = new Client(nom, prenom);
+
         Collection<CompteBancaire> cpts = new ArrayList<>();
         CompteBancaire cpt = new CompteBancaire();
+        cpt.setTypeCompte(gestionnaireTypeCompte.getTypeCompte("Compte Epargne"));
         em.persist(cpt);
         cpts.add(cpt);
         em.persist(c);
@@ -73,13 +77,13 @@ public class GestionnaireUtilisateur {
         u.setClient(c);
         em.persist(u);
     }
-    
-    
+
     public void creerUtilisateur(Utilisateur u) {
-        Client c = new Client(u.getNom() ,u.getPrenom());
-        
+        Client c = new Client(u.getNom(), u.getPrenom());
+
         Collection<CompteBancaire> cpts = new ArrayList<>();
         CompteBancaire cpt = new CompteBancaire();
+        cpt.setTypeCompte(gestionnaireTypeCompte.getTypeCompte("Compte Epargne"));
         em.persist(cpt);
         cpts.add(cpt);
         em.persist(c);
@@ -87,7 +91,7 @@ public class GestionnaireUtilisateur {
         c.setCompteBancaires(cpts);
         u.setClient(c);
         em.persist(u);
-        
+
     }
 
     public Utilisateur getUtilisateur(String username, String password) {

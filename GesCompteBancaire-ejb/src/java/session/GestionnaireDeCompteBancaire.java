@@ -220,8 +220,10 @@ public class GestionnaireDeCompteBancaire {
             Date date = new Date();
             transaction.setComptebancaire(c1);
             transaction.setDateTransaction(date);
+            transaction.setMontant(montant);
             transaction.setClient(c1.getClient());
             transaction.setDescription("Dépot");
+            em.persist(transaction);
             c1.deposer(montant);
             try {
                 userTx.commit();

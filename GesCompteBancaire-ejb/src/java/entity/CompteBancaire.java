@@ -11,11 +11,21 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Random;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
 import javax.persistence.CascadeType;
+import javax.persistence.DiscriminatorColumn;
+import javax.persistence.DiscriminatorType;
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -23,6 +33,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.xml.bind.annotation.XmlRootElement;
+import session.GestionnaireTypeCompte;
 
 
 /**
@@ -31,6 +42,9 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @Entity
 @Table(name = "COMPTEBANCAIRE")
+@Inheritance(strategy= InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name="DISC", discriminatorType = DiscriminatorType.STRING)
+@DiscriminatorValue("COMPTEBANCAIRE")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "CompteBancaire.findAll", query = "SELECT c FROM CompteBancaire c"),
@@ -41,6 +55,8 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "CompteBancaire.findCompteByClientId", query = "SELECT c FROM CompteBancaire c WHERE c.client.id = :clientId")
 })
 public class CompteBancaire implements Serializable {
+
+   
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -64,6 +80,8 @@ public class CompteBancaire implements Serializable {
         dateOuvertureCompte = new Date();
         Random rand = new Random(); 
         int nombreAleatoire = rand.nextInt(10000 - 0 + 1) + 0;
+     //    GestionnaireTypeCompte gestionnaireTypeCompte = lookupGestionnaireTypeCompteBean();
+     //   this.typeCompte = gestionnaireTypeCompte.getTypeCompte("Compte Epargne");
         this.numeroCompte = String.valueOf(nombreAleatoire);
         this.dateOuverture = dateOuvertureCompte;
     }
@@ -181,6 +199,16 @@ public class CompteBancaire implements Serializable {
     @Override
     public String toString() {
         return "entity.CompteBancaire[ id=" + id + " ]";
+    }
+
+    private GestionnaireTypeCompte lookupGestionnaireTypeCompteBean() {
+        try {
+            Context c = new InitialContext();
+            return (GestionnaireTypeCompte) c.lookup("java:global/GesCompteBancaire/GesCompteBancaire-ejb/GestionnaireTypeCompte!session.GestionnaireTypeCompte");
+        } catch (NamingException ne) {
+            Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
+            throw new RuntimeException(ne);
+        }
     }
 
 }

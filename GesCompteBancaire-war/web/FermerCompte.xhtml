@@ -36,7 +36,11 @@
                                                    itemLabel="#{item.numeroCompte}" itemValue="#{item}"/>
                                 </h:selectOneMenu>
 
-                                <h:commandButton value="Fermer" class="btn btn-primary" id="ferme" action="#{compteBancairMBean.fermerCompte()}"/>
+                               
+                            </h:panelGrid>
+                            <h:panelGrid columns="2">
+                                 <h:commandButton value="Fermer" class="btn btn-primary" id="ferme" action="#{compteBancairMBean.fermerCompte()}"/>
+                                  <h:commandButton class="btn btn-primary" value="Quitter" id="quitter" action="#{compteBancairMBean.addRetour()}"/>
                                 <h:outputText rendered="#{!compteBancairMBean.sansMontant}" value="Le solde de votre compte n'est pas 0 vous ne pouvez pas fermer ce compte" />
                             </h:panelGrid>
                         </p:panel>
@@ -52,6 +56,7 @@
                                                    itemLabel="#{element.numeroCompte}" itemValue="#{element}"/>
                                 </h:selectOneMenu>
                                 <h:commandButton value="Transférer" class="btn btn-primary" id="transfere" action="#{compteBancairMBean.transfererMontant()}"/>
+                             
                             </h:panelGrid>
                         </p:panel>
                     </h:form>

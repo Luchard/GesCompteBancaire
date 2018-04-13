@@ -7,6 +7,8 @@ package managedbeans;
 
 import entity.Client;
 import entity.CompteBancaire;
+import entity.CompteCourant;
+import entity.CompteEpargne;
 import entity.TransactionBancaire;
 import entity.TypeCompte;
 import entity.TypeUtilisateur;
@@ -83,6 +85,8 @@ public class CompteBancaireMBean implements Serializable {
     private GestionnaireDeClient gestionnaireDeClient;
 
     private CompteBancaire compteBancaire = new CompteBancaire();
+    private CompteCourant compteCourant = new CompteCourant();
+    private CompteEpargne compteBancaireEpargne = new CompteEpargne();
     private CompteBancaire compteBancaireVire = new CompteBancaire();
     private CompteBancaire compteBancaireTransferer = new CompteBancaire();
 
@@ -348,7 +352,6 @@ public class CompteBancaireMBean implements Serializable {
             }
             montantInteret = (float) (compteBancaire.getTypeCompte().getInteret() * (float) compteBancaire.getSolde() * nbreMois) / 100;
 
-            
             gestionnaireDeCompteBancaire.virementCompteACompte(compteBancaire.getId(), compteBancaireTransferer.getId(), compteBancaire.getSolde());
             gestionnaireDeCompteBancaire.depot(compteBancaireTransferer.getId(), (int) montantInteret);
             gestionnaireDeCompteBancaire.fermerCompte(compteBancaire.getId());
@@ -380,6 +383,11 @@ public class CompteBancaireMBean implements Serializable {
             Logger.getLogger(CompteBancaireMBean.class.getName()).log(Level.SEVERE, null, ex);
         }
         montantInteret = (float) (cbancaire.getTypeCompte().getInteret() * (float) cbancaire.getSolde() * nbreMois) / 100;
+    }
+
+    public String addRetour() {
+
+        return "ListeCompteBancaires.xhtml";
     }
 
     private void sendJMSMessageToLoggingMessages(String messageData) {

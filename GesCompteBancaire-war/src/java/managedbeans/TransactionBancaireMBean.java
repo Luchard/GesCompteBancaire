@@ -70,5 +70,10 @@ public class TransactionBancaireMBean implements Serializable {
     public List<TransactionBancaire> getTransactionsCompte() {
         return gestionnaireTransaction.getAllTransactionsByCompte(idCompteBancaire);
     }
+    
+        public String addRetour() {
+       
+        return "ListeTransaction.xhtml";
+    }
 
 }

@@ -2,12 +2,12 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" 
       xmlns:ui="http://java.sun.com/jsf/facelets"
-    xmlns:h="http://java.sun.com/jsf/html"
-       xmlns:f="http://xmlns.jcp.org/jsf/core"
-    xmlns:p="http://primefaces.org/ui"
->
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      >
     <h:head>
-         <link href="../resources/vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet"></link>
+        <link href="../resources/vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet"></link>
 
         <link href="../resources/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet"/>
 
@@ -16,73 +16,73 @@
         <link href="../resources/css/sb-admin.css" rel="stylesheet"></link>
         <title>Liste Clients</title>
     </h:head>
-  
-    
-  
-        <h:body>
-          
-      
+
+
+
+    <h:body>
+
+
         <ui:composition template="./template.xhtml">
- 
+
             <ui:define name="content">
-                 <ol class="breadcrumb">
-        <li class="breadcrumb-item">
-          <a href="index.xhtml">Dashboard</a>
-        </li>
-        <li class="breadcrumb-item active">Liste Clients </li>
-  </ol>
-                 <f:view>
-            <h:form>
-                <p:panel id="panel">
-                <h1><h:outputText value="Liste des Clients"/></h1>
-                <p:dataTable value="#{clientMBean.clients}"
-                             
-                             widgetVar="clientTable"
-                             paginator="true" rows="10"
-                             emptyMessage="No customer found with given criteria"
-                             var="item">
-                    
-                    
-                            <f:facet name="header">    
-    <p:outputPanel>    
-        <h:outputText value="Search all fields:" />    
-        <p:inputText id="globalFilter" onkeyup="clientTable.filter()" style="width:150px" />    
-    </p:outputPanel>    
-</f:facet>
-            
-                    
-                    <p:column headerText="Client"  
-          sortBy="#{item.id}"  
-          filterBy="#{item.id}"  
-          filterMatchMode="contains">  
-                        <h:link outcome="#{clientMBean.showDetails(item.id)}" value="#{item.id}"/>    
-</p:column> 
-                    <p:column>
-                        <f:facet name="header">
-                            <h:outputText value="Nom"/>
-                        </f:facet>
-                        <h:outputText value="#{item.nom}"/>
-                    </p:column>
-                    <p:column>
-                        <f:facet name="header">
-                            <h:outputText value="Prenom"/>
-                        </f:facet>
-                        <h:outputText value="#{item.prenom}"/>
-                    </p:column>
-                   
-                    <p:column>
-                        <f:facet name="header">
-                            <h:outputText value="Phone"/>
-                        </f:facet>
-                        <h:outputText value="#{item.phone}"/>
-                    </p:column>
-                    
-                </p:dataTable>
-                </p:panel>
-            </h:form>
-        </f:view>
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        <a href="index.xhtml">Dashboard</a>
+                    </li>
+                    <li class="breadcrumb-item active">Liste Clients </li>
+                </ol>
+                <f:view>
+                    <h:form>
+                        <p:panel id="panel">
+                            <h1><h:outputText value="Liste des Clients"/></h1>
+                            <p:dataTable value="#{clientMBean.clients}"
+
+                                         widgetVar="clientTable"
+                                         paginator="true" rows="10"
+                                         emptyMessage="No customer found with given criteria"
+                                         var="item">
+
+
+                                <f:facet name="header">    
+                                    <p:outputPanel>    
+                                        <h:outputText value="Search all fields:" />    
+                                        <p:inputText id="globalFilter" onkeyup="clientTable.filter()" style="width:150px" />    
+                                    </p:outputPanel>    
+                                </f:facet>
+
+
+                                <p:column headerText="Client"  
+                                          sortBy="#{item.id}"  
+                                          filterBy="#{item.id}"  
+                                          filterMatchMode="contains">  
+                                    <h:link outcome="#{clientMBean.showDetails(item.id)}" value="#{item.id}"/>    
+                                </p:column> 
+                                <p:column sortBy="#{item.nom}"  
+                                          filterBy="#{item.nom}"  
+                                          filterMatchMode="contains" headerText="Nom">
+
+                                    <h:outputText value="#{item.nom}"/>
+                                </p:column>
+                                <p:column sortBy="#{item.prenom}"  
+                                          filterBy="#{item.prenom}"  
+                                          filterMatchMode="contains" headerText="Prénom">
+                                   
+                                    <h:outputText value="#{item.prenom}"/>
+                                </p:column>
+
+                                <p:column>
+                                    <f:facet name="header">
+                                        <h:outputText value="Phone"/>
+                                    </f:facet>
+                                    <h:outputText value="#{item.phone}"/>
+                                </p:column>
+
+                            </p:dataTable>
+                        </p:panel>
+                    </h:form>
+                </f:view>
             </ui:define>
- 
+
         </ui:composition>
     </h:body>
 </html>

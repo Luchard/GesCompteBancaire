@@ -63,6 +63,7 @@
                             <h:outputLabel value="Solde:" for="solde" />
                             <h:inputText id="solde" required="true" value="#{compteBancairMBean.compteBancaire.solde}" class="form-control" title="Solde" />
                             <h:commandButton id="ajouter"  value="Sauvegarder" class="btn btn-primary"  action="#{compteBancairMBean.addCompte}" actionListener="#{compteBancairMBean.addCompte}"/>
+                            <h:commandButton class="btn btn-primary" value="Quitter" id="quitter" action="#{compteBancairMBean.addRetour()}"/>
                             <h:messages style = "color:red"/>
                         </h:panelGrid>
                     </p:panel>

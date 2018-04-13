@@ -47,10 +47,15 @@
                     </h:selectOneMenu>
                     
 
-                    <h:commandButton class="btn btn-primary" value="Retrait" id="retrait" action="#{compteBancairMBean.sauvegarderRetraitTransaction()}"/>
+                   
+                </h:panelGrid>
+                <h:panelGrid columns="3">
+                     <h:commandButton class="btn btn-primary" value="Retrait" id="retrait" action="#{compteBancairMBean.sauvegarderRetraitTransaction()}"/>
                     <h:commandButton class="btn btn-primary" value="Depot" id="depot" action="#{compteBancairMBean.sauvegarderTransaction()}"/>
+                  <h:commandButton class="btn btn-primary" value="Quitter" id="quitter" action="#{compteBancairMBean.addRetour()}"/>
                     <h:outputText rendered="#{compteBancairMBean.compteEpargne}" value="Vous ne pouvez pas retiré de l'argent sur un compte d'épargne" />
                     <h:messages style = "color:red"/>
+                
                 </h:panelGrid>
                 </p:panel>
             </h:form>
