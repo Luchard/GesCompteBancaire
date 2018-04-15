@@ -35,6 +35,9 @@
                     <h:form>
                         <p:panel id="panel">
                             <h1><h:outputText value="Liste des Clients"/></h1>
+                            <a href="${facesContext.externalContext.requestContextPath}/faces/NouveauClient.xhtml" class="btn btn-primary btn-sm pull-right"><i class="fa fa-plus"> Ajouter</i></a>
+                            <br></br>
+                             <br></br>
                             <p:dataTable value="#{clientMBean.clients}"
 
                                          widgetVar="clientTable"

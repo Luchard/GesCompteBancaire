@@ -29,6 +29,9 @@
             <h:form>
                 <p:panel id="panel">
                 <h1><h:outputText value="Liste des transactions"/></h1>
+                <a href="${facesContext.externalContext.requestContextPath}/faces/NouvelleTransaction.xhtml" class="btn btn-primary btn-sm pull-right"><i class="fa fa-plus"> Ajouter</i></a>
+                            <br></br>
+                             <br></br>
                 <p:dataTable value="#{transactionBancaireMBean.transactions}" var="item">
                     <p:column>
                         <f:facet name="header">

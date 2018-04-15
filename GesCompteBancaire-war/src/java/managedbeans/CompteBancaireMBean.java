@@ -94,6 +94,7 @@ public class CompteBancaireMBean implements Serializable {
     private TypeCompte typeCompte;
     private boolean sansMontant = true;
     private boolean compteEpargne = false;
+    private boolean montantInsuffisant = false;
     private float montantInteret = 0.0F;
     private Long idCompteBancaire;
 
@@ -115,6 +116,14 @@ public class CompteBancaireMBean implements Serializable {
 
     public boolean isCompteEpargne() {
         return compteEpargne;
+    }
+
+    public boolean isMontantInsuffisant() {
+        return montantInsuffisant;
+    }
+
+    public void setMontantInsuffisant(boolean montantInsuffisant) {
+        this.montantInsuffisant = montantInsuffisant;
     }
 
     public void setCompteEpargne(boolean compteEpargne) {
@@ -292,12 +301,14 @@ public class CompteBancaireMBean implements Serializable {
     public void sauvegarderRetraitTransaction() {
         if ("Compte Epargne".equals(compteBancaire.getTypeCompte().getNom())) {
             compteEpargne = true;
+        } else if (compteBancaire.getSolde() < transaction.getMontant()) {
+            montantInsuffisant = true;
         } else {
-
             int retrait = 0;
+            montantInsuffisant = false;
             retrait = gestionnaireDeCompteBancaire.retrait(compteBancaire.getId(), transaction.getMontant());
-            //  return "ListeCompteBancaires.xhtml";
-        }
+       //     return "ListeCompteBancaires.xhtml";
+        } //  return "ListeCompteBancaires.xhtml";
     }
 
     public String sauvegarderVirement() {
